@@ -10,7 +10,7 @@ const secciones = [
   {
     titulo: 'Qué datos recopilamos',
     parrafos: [
-      'Cuando publicás un perfil, te pedimos: nombre, número de WhatsApp, email, categoría y oficio, una descripción de lo que hacés, tu barrio o zona y, si querés, una foto.',
+      'Cuando publicás un perfil, te pedimos: nombre, número de WhatsApp, email, categoría y oficio, una descripción de lo que hacés, tu barrio o zona y una foto.',
       'Si iniciás sesión en el panel de administración, se usan los datos de acceso necesarios para autenticarte.',
       'Además, el proveedor donde está alojado el sitio puede registrar datos técnicos de las visitas, como la dirección IP y el tipo de navegador, para el funcionamiento y la seguridad del servicio.',
     ],

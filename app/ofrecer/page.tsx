@@ -191,9 +191,9 @@ export default function Offer() {
           </fieldset>
 
           <fieldset>
-            <legend className="font-black text-xl">Foto (opcional)</legend>
+            <legend className="font-black text-xl">Foto de perfil (obligatoria)</legend>
             <input
-              type="file"
+              type="file" required
               accept="image/*"
               onChange={(e) => {
                 const archivo = e.target.files && e.target.files[0] ? e.target.files[0] : null;
