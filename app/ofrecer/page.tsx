@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { categories } from '@/lib/data';
 import { supabase } from '@/lib/supabase';
@@ -101,6 +102,7 @@ export default function Offer() {
                 foto: fotoUrl,
                 verificado: false,
                 plan: 'gratis',
+                acepto_terminos_at: new Date().toISOString(),
               },
             ]);
 
@@ -205,6 +207,21 @@ export default function Offer() {
               <img src={vista} alt="" className="w-24 h-24 rounded-2xl object-cover mt-3" />
             ) : null}
           </fieldset>
+
+          <label className="flex gap-3 items-start text-sm leading-6">
+            <input type="checkbox" required className="mt-1" />
+            <span>
+              Leí y acepto los{' '}
+              <Link href="/terminos" target="_blank" className="underline font-bold">
+                Términos y condiciones
+              </Link>{' '}
+              y la{' '}
+              <Link href="/privacidad" target="_blank" className="underline font-bold">
+                Política de privacidad
+              </Link>
+              , y acepto que mi nombre, oficio, zona, foto y WhatsApp se muestren públicamente.
+            </span>
+          </label>
 
           <button disabled={enviando} className="btn btn-primary w-full">
             {enviando ? 'Publicando...' : 'Publicar mi oficio'}
