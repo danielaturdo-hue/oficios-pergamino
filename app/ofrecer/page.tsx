@@ -25,6 +25,8 @@ async function reducirFoto(archivo: File): Promise<Blob> {
   });
 }
 
+const OFICIOS_GENERICOS = ['varios', 'varios oficios', 'todo', 'todo tipo de trabajos', 'otros', 'otro'];
+
 export default function Offer() {
   const [done, setDone] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -66,6 +68,15 @@ export default function Offer() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+
+            const oficioLimpio = oficio.trim();
+            if (OFICIOS_GENERICOS.includes(oficioLimpio.toLowerCase())) {
+              alert(
+                'Escribí tu oficio principal (por ejemplo: Plomero). Los demás trabajos que hacés, contalos en la descripción.'
+              );
+              return;
+            }
+
             setEnviando(true);
 
             let fotoUrl = '';
@@ -93,7 +104,7 @@ export default function Offer() {
               {
                 nombre: nombre,
                 apellido: '',
-                oficio: oficio,
+                oficio: oficioLimpio,
                 telefono: telefono,
                 email: email,
                 descripcion: descripcion,
@@ -162,15 +173,19 @@ export default function Offer() {
               </select>
               <input
                 required
-                placeholder="Oficio principal"
+                maxLength={40}
+                placeholder="Tu oficio principal (ej. Plomero, Costurera)"
                 value={oficio}
                 onChange={(e) => setOficio(e.target.value)}
                 className="border rounded-xl p-3"
               />
             </div>
+            <p className="text-xs muted mt-2">
+              Escribí un solo oficio principal. Los demás trabajos que hacés, contalos en la descripción.
+            </p>
             <textarea
               required
-              placeholder="Contá brevemente qué hacés"
+              placeholder="Contá qué trabajos hacés, tu experiencia y en qué zonas trabajás"
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               className="border rounded-xl p-3 w-full mt-4 min-h-28"
@@ -193,7 +208,8 @@ export default function Offer() {
           <fieldset>
             <legend className="font-black text-xl">Foto de perfil (obligatoria)</legend>
             <input
-              type="file" required
+              type="file"
+              required
               accept="image/*"
               onChange={(e) => {
                 const archivo = e.target.files && e.target.files[0] ? e.target.files[0] : null;
