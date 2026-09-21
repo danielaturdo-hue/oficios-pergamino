@@ -25,7 +25,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
         <div className="card overflow-hidden">
           <div className="h-32 bg-[#2f6b52]" />
           <div className="p-6 md:p-8 -mt-12">
-            <img src="/placeholder-work.svg" alt="" className="w-28 h-28 rounded-3xl object-cover border-4 border-white" />
+            <img src="/src={p.foto || '/placeholder-work.svg'}.svg" alt="" className="w-28 h-28 rounded-3xl object-cover border-4 border-white" />
             <div className="mt-4 flex flex-col md:flex-row md:items-start md:justify-between gap-5">
               <div>
                 <h1 className="text-3xl font-black">{p.nombre}</h1>

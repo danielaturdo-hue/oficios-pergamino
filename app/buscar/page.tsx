@@ -27,7 +27,7 @@ services: [],
 hours: '',
 whatsapp: p.telefono || '',
 badges: [],
-photos: ['/placeholder-work.svg']
+photos: [p.foto || '/placeholder-work.svg']
 }));
 const filtered = professionalsDb.filter(
 p => match(q, p) &&

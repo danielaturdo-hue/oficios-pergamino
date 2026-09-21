@@ -5,8 +5,28 @@ import { useRouter } from 'next/navigation';
 import { categories } from '@/lib/data';
 import { supabase } from '@/lib/supabase';
 
+async function reducirFoto(archivo: File): Promise<Blob> {
+  const bitmap = await createImageBitmap(archivo);
+  const max = 800;
+  const escala = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(bitmap.width * escala);
+  canvas.height = Math.round(bitmap.height * escala);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('No se pudo procesar la foto');
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  return await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error('No se pudo procesar la foto'))),
+      'image/jpeg',
+      0.85
+    );
+  });
+}
+
 export default function Offer() {
   const [done, setDone] = useState(false);
+  const [enviando, setEnviando] = useState(false);
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +34,8 @@ export default function Offer() {
   const [oficio, setOficio] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [localidad, setLocalidad] = useState('');
+  const [foto, setFoto] = useState<File | null>(null);
+  const [vista, setVista] = useState('');
   const router = useRouter();
 
   if (done) {
@@ -43,6 +65,28 @@ export default function Offer() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            setEnviando(true);
+
+            let fotoUrl = '';
+            if (foto) {
+              try {
+                const reducida = await reducirFoto(foto);
+                const nombreArchivo = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+                const { error: errorFoto } = await supabase.storage
+                  .from('fotos')
+                  .upload(nombreArchivo, reducida, { contentType: 'image/jpeg' });
+                if (errorFoto) {
+                  alert('No se pudo subir la foto: ' + errorFoto.message);
+                  setEnviando(false);
+                  return;
+                }
+                fotoUrl = supabase.storage.from('fotos').getPublicUrl(nombreArchivo).data.publicUrl;
+              } catch (err) {
+                alert('No se pudo procesar la foto. Probá con otra imagen (JPG o PNG).');
+                setEnviando(false);
+                return;
+              }
+            }
 
             const { error } = await supabase.from('Profesionales').insert([
               {
@@ -54,6 +98,7 @@ export default function Offer() {
                 descripcion: descripcion,
                 localidad: localidad,
                 categoria: categoria,
+                foto: fotoUrl,
                 verificado: false,
                 plan: 'gratis',
               },
@@ -61,6 +106,7 @@ export default function Offer() {
 
             if (error) {
               alert(error.message);
+              setEnviando(false);
               return;
             }
 
@@ -142,7 +188,27 @@ export default function Offer() {
             </div>
           </fieldset>
 
-          <button className="btn btn-primary w-full">Publicar mi oficio</button>
+          <fieldset>
+            <legend className="font-black text-xl">Foto (opcional)</legend>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const archivo = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+                setFoto(archivo);
+                setVista(archivo ? URL.createObjectURL(archivo) : '');
+              }}
+              className="border rounded-xl p-3 w-full mt-4"
+            />
+            <p className="text-xs muted mt-2">La foto se mostrará públicamente en tu perfil.</p>
+            {vista ? (
+              <img src={vista} alt="" className="w-24 h-24 rounded-2xl object-cover mt-3" />
+            ) : null}
+          </fieldset>
+
+          <button disabled={enviando} className="btn btn-primary w-full">
+            {enviando ? 'Publicando...' : 'Publicar mi oficio'}
+          </button>
         </form>
       </div>
     </main>
