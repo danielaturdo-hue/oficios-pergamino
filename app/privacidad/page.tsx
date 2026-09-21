@@ -16,6 +16,13 @@ const secciones = [
     ],
   },
   {
+    titulo: 'Solicitudes de servicio',
+    parrafos: [
+      'Si publicás una solicitud, te pedimos: título, categoría, descripción del trabajo, zona, fecha aproximada, presupuesto estimado (opcional) y un número de WhatsApp de contacto. Estos datos no se muestran públicamente en el sitio.',
+      'Con tu autorización expresa, podemos compartir tu solicitud y tu número de contacto con profesionales de la categoría correspondiente, para que puedan comunicarse con vos. Desde ese momento, la comunicación se rige por las políticas de la aplicación que utilicen, como WhatsApp.',
+    ],
+  },
+  {
     titulo: 'Qué datos se muestran públicamente',
     parrafos: [
       'En tu perfil se muestran públicamente tu nombre, oficio, categoría, zona, descripción, foto y número de WhatsApp. Cualquier persona que visite el sitio puede verlos y contactarte por WhatsApp.',
@@ -26,7 +33,7 @@ const secciones = [
   {
     titulo: 'Para qué usamos los datos',
     parrafos: [
-      'Usamos los datos para mostrar tu perfil en las búsquedas y categorías, permitir que te contacten, gestionar tu perfil (por ejemplo, modificarlo o darlo de baja), moderar contenido, mantener la seguridad del sitio y, si algún día se ofrecen planes pagos, administrar tu suscripción.',
+      'Usamos los datos para mostrar tu perfil en las búsquedas y categorías, permitir que te contacten, gestionar tu perfil (por ejemplo, modificarlo o darlo de baja), compartir tus solicitudes de servicio con profesionales cuando lo autorices, moderar contenido, mantener la seguridad del sitio y, si algún día se ofrecen planes pagos, administrar tu suscripción.',
       'No vendemos tus datos ni los usamos para publicidad de terceros.',
     ],
   },
@@ -49,12 +56,13 @@ const secciones = [
     titulo: 'Cuánto tiempo guardamos los datos',
     parrafos: [
       'Conservamos tus datos mientras tu perfil esté activo. Si pedís la baja, eliminamos tu perfil y tus datos, salvo que debamos conservar alguna información por una obligación legal.',
+      'Las solicitudes de servicio se conservan durante un tiempo razonable y podés pedir que las eliminemos en cualquier momento.',
     ],
   },
   {
     titulo: 'Tus derechos',
     parrafos: [
-      'Podés pedir en cualquier momento acceder a tus datos, corregirlos, actualizarlos o eliminarlos, y solicitar la baja de tu perfil. Para hacerlo, escribinos al contacto indicado al final.',
+      'Podés pedir en cualquier momento acceder a tus datos, corregirlos, actualizarlos o eliminarlos, y solicitar la baja de tu perfil o de tus solicitudes. Para hacerlo, escribinos al contacto indicado al final.',
       'La Agencia de Acceso a la Información Pública es el órgano de control de la Ley 25.326 de Protección de Datos Personales de la República Argentina, y atiende las denuncias y reclamos de quienes consideren que sus derechos fueron afectados.',
     ],
   },
@@ -79,7 +87,7 @@ const secciones = [
   {
     titulo: 'Contacto',
     parrafos: [
-      'Para consultas, pedidos de acceso, corrección o baja de datos, escribinos a: daniela.turdo',
+      'Para consultas, pedidos de acceso, corrección o baja de datos, escribinos a: daniela.turdo@gmail.com',
     ],
   },
 ];
