@@ -22,11 +22,11 @@ export default function Request() {
         <div className="container max-w-xl">
           <div className="card p-10 text-center">
             <div className="text-6xl">📣</div>
-            <h1 className="text-3xl font-black mt-4">Recibimos tu solicitud</h1>
+            <h1 className="text-3xl font-black mt-4">Recibimos tu pedido</h1>
             <p className="muted mt-2">
-              Vamos a compartir tu pedido con profesionales de esa categoría para que te contacten por
-              WhatsApp. El sitio está en etapa de prueba, así que no podemos asegurar cuándo ni si vas a
-              recibir respuesta.
+              Lo vamos a revisar y, una vez aprobado, aparece en la sección Pedidos durante 30 días, para que
+              profesionales te contacten por WhatsApp. El sitio está en etapa de prueba, así que no podemos
+              asegurar que recibas respuesta.
             </p>
             <Link href="/buscar" className="btn btn-primary mt-6">
               Buscar profesionales
@@ -40,11 +40,18 @@ export default function Request() {
   return (
     <main className="py-10">
       <div className="container max-w-3xl">
-        <p className="text-sm font-bold text-[#2f6b52]">NECESITO UN SERVICIO</p>
+        <p className="text-sm font-bold text-[#2f6b52]">NECESITO CONTRATAR UN SERVICIO</p>
         <h1 className="text-4xl font-black mt-2">¿Qué necesitás resolver?</h1>
         <p className="muted mt-2">
-          Contanos qué necesitás y lo compartimos con profesionales de Pergamino. También podés buscar
-          directamente en la sección de profesionales.
+          Este formulario es para quien necesita contratar a un profesional. También podés buscar directamente
+          en la sección de profesionales.
+        </p>
+        <p className="mt-3 text-sm">
+          ¿Ofrecés un servicio o buscás trabajo?{' '}
+          <Link href="/ofrecer" className="underline font-bold">
+            Publicá tu oficio acá
+          </Link>
+          .
         </p>
 
         <form
@@ -142,13 +149,13 @@ export default function Request() {
               <Link href="/privacidad" target="_blank" className="underline font-bold">
                 Política de privacidad
               </Link>
-              , y autorizo que mi solicitud y mi WhatsApp se compartan con profesionales de la categoría
-              elegida para que puedan contactarme.
+              , y autorizo que mi pedido y mi número de WhatsApp se muestren públicamente en la sección Pedidos
+              del sitio, para que profesionales puedan contactarme.
             </span>
           </label>
 
           <button disabled={enviando} className="btn btn-primary w-full">
-            {enviando ? 'Enviando...' : 'Enviar solicitud'}
+            {enviando ? 'Enviando...' : 'Enviar pedido'}
           </button>
         </form>
       </div>
