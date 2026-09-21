@@ -32,7 +32,7 @@ const secciones = [
     titulo: 'Contenido publicado',
     parrafos: [
       'Los usuarios son responsables de la información y las fotos que publican, y deben tener derecho a usarlas. No se permiten imágenes de terceros sin autorización, ni contenido ilegal, engañoso, ofensivo o discriminatorio, ni publicidad ajena a los oficios y servicios.',
-      'Al publicar, la persona autoriza a la plataforma a mostrar ese contenido en el sitio mientras el perfil esté activo.',
+      'Al publicar, la persona autoriza a la plataforma a mostrar ese contenido en el sitio mientras el perfil esté activo. Los pedidos de servicio se muestran públicamente, con el WhatsApp de quien los publica, una vez aprobados, y pueden ser retirados en cualquier momento.',
     ],
   },
   {
