@@ -7,7 +7,7 @@ function match(q:string,p:any){if(!q)return true;const s=q.toLowerCase();const w
 export default async function SearchPage({searchParams}:{searchParams:Promise<{q?:string;category?:string}>}){const sp=await searchParams;const q=sp.q||'';
     const { data } = await supabase
 .from('Profesionales')
-.select('*');
+.select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan');
 const professionalsDb = (data || []).map((p: any) => ({
 id: String(p.id),
 slug: `profesional-${p.id}`,

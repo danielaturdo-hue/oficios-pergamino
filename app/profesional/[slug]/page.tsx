@@ -8,7 +8,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
 
   const { data: p } = await supabase
     .from('Profesionales')
-    .select('*')
+    .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan')
     .eq('id', id)
     .maybeSingle();
 
