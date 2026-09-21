@@ -1,5 +1,6 @@
 import './globals.css';
 import { Header } from '@/components/Header';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: 'Oficios Pergamino | Profesionales y servicios en Pergamino',
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+      <Analytics />
       </body>
     </html>
   );
