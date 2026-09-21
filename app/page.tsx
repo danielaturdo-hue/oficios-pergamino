@@ -7,12 +7,21 @@ import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
+const atajos = [
+  { icon: '🔧', texto: 'Necesito un plomero', href: '/categorias/plomeria' },
+  { icon: '🧵', texto: '¿Quién arregla ropa?', href: '/categorias/costura-confeccion' },
+  { icon: '🎨', texto: 'Quiero pintar mi casa', href: '/categorias/pintura' },
+];
+
 export default async function Home() {
   const { data } = await supabase
     .from('Profesionales')
     .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan')
     .order('created_at', { ascending: false })
     .limit(4);
+
+  const { data: todos } = await supabase.from('Profesionales').select('id');
+  const total = todos ? todos.length : 0;
 
   const nuevos = (data || []).map((p: any) => ({
     id: String(p.id),
@@ -59,18 +68,36 @@ export default async function Home() {
               </Link>
             </div>
           </div>
+
           <div className="hidden md:block">
-            <div className="card p-7">
-              <div className="text-6xl">🧰</div>
-              <h2 className="text-2xl font-black mt-5">Lo que necesitás.</h2>
-              <p className="muted mt-2">
-                Una persona de confianza para resolver ese trabajo que venís postergando.
+            <div className="card p-8" style={{ background: '#2f6b52', color: '#ffffff' }}>
+              <div className="text-5xl">🧰</div>
+              <h2 className="text-3xl font-black mt-5" style={{ color: '#ffffff' }}>
+                ¿Qué necesitás resolver?
+              </h2>
+              <p className="mt-2" style={{ color: '#e8f2eb' }}>
+                Elegí una opción o escribí arriba lo que buscás.
               </p>
               <div className="mt-6 space-y-3">
-                <div className="bg-[#f7f4ed] rounded-xl p-4">🔧 “Necesito un plomero”</div>
-                <div className="bg-[#f7f4ed] rounded-xl p-4">🧵 “¿Quién arregla ropa?”</div>
-                <div className="bg-[#f7f4ed] rounded-xl p-4">🎨 “Quiero pintar mi casa”</div>
+                {atajos.map((a) => (
+                  <Link
+                    key={a.href}
+                    href={a.href}
+                    className="flex items-center justify-between rounded-xl p-4 font-bold hover:-translate-y-1 transition"
+                    style={{ background: '#ffffff', color: '#1f2d26' }}
+                  >
+                    <span>
+                      {a.icon} {a.texto}
+                    </span>
+                    <ArrowRight size={18} />
+                  </Link>
+                ))}
               </div>
+              {total >= 5 ? (
+                <p className="mt-6 font-bold" style={{ color: '#f4c95d' }}>
+                  ✅ {total} profesionales ya se sumaron
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
