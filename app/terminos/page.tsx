@@ -87,7 +87,7 @@ const secciones = [
   {
     titulo: 'Contacto',
     parrafos: [
-      'Para consultas, reportes o pedidos de baja de perfiles, escribinos a: daniela.turdo@gmail.com',
+      'Para consultas, reportes o pedidos de baja de perfiles, escribinos a: oficios.pergamino@gmail.com',
     ],
   },
 ];
