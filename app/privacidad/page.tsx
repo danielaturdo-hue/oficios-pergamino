@@ -18,7 +18,7 @@ const secciones = [
   {
     titulo: 'Solicitudes de servicio',
     parrafos: [
-      'Si publicás una solicitud, te pedimos: título, categoría, descripción del trabajo, zona, fecha aproximada, presupuesto estimado (opcional) y un número de WhatsApp de contacto. Estos datos no se muestran públicamente en el sitio.',
+      'Si publicás una solicitud, te pedimos: título, categoría, descripción del trabajo, zona, fecha aproximada, presupuesto estimado (opcional) y un número de WhatsApp de contacto. Una vez aprobada por el sitio, tu solicitud se muestra públicamente en la sección Pedidos durante 30 días, incluido tu número de WhatsApp, para que profesionales puedan contactarte. Podés pedir que la retiremos en cualquier momento.',
       'Con tu autorización expresa, podemos compartir tu solicitud y tu número de contacto con profesionales de la categoría correspondiente, para que puedan comunicarse con vos. Desde ese momento, la comunicación se rige por las políticas de la aplicación que utilicen, como WhatsApp.',
     ],
   },

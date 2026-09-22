@@ -27,6 +27,14 @@ async function reducirFoto(archivo: File): Promise<Blob> {
 
 const OFICIOS_GENERICOS = ['varios', 'varios oficios', 'todo', 'todo tipo de trabajos', 'otros', 'otro'];
 
+function pareceInventado(texto: string) {
+  const limpio = texto.trim().toLowerCase().replace(/\s+/g, '');
+  if (limpio.length < 2) return true;
+  if (/^(.)\1*$/.test(limpio)) return true; // una sola letra repetida: "dddddd", "aaaa"
+  if (!/[aeiouáéíóú]/.test(limpio)) return true; // sin ninguna vocal
+  return false;
+}
+
 export default function Offer() {
   const [done, setDone] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -69,6 +77,19 @@ export default function Offer() {
           onSubmit={async (e) => {
             e.preventDefault();
 
+            const nombreLimpio = nombre.trim();
+            if (pareceInventado(nombreLimpio)) {
+              alert('Escribí tu nombre real, para que los clientes sepan con quién están hablando.');
+              return;
+            }
+
+            const emailLimpio = email.trim();
+            const usuarioEmail = emailLimpio.split('@')[0] || '';
+            if (pareceInventado(usuarioEmail)) {
+              alert('Escribí un email real, lo usamos solo para gestionar tu perfil.');
+              return;
+            }
+
             const oficioLimpio = oficio.trim();
             if (OFICIOS_GENERICOS.includes(oficioLimpio.toLowerCase())) {
               alert(
@@ -102,11 +123,11 @@ export default function Offer() {
 
             const { error } = await supabase.from('Profesionales').insert([
               {
-                nombre: nombre,
+                nombre: nombreLimpio,
                 apellido: '',
                 oficio: oficioLimpio,
                 telefono: telefono,
-                email: email,
+                email: emailLimpio,
                 descripcion: descripcion,
                 localidad: localidad,
                 categoria: categoria,
