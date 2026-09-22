@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="flex flex-col gap-2">
               <a href="/terminos">Términos y condiciones</a>
               <a href="/privacidad">Política de privacidad</a>
-              <a href="mailto:daniela">Contacto</a>
+              <a href="mailto:oficios.pergamino@gmail.com">Contacto</a>
             </div>
           </div>
         </footer>
