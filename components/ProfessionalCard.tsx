@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { MapPin, Star, MessageCircle, CheckCircle2 } from 'lucide-react';
 import type { Professional } from '@/lib/data';
@@ -45,7 +47,16 @@ export function ProfessionalCard({ p }: { p: Professional }) {
           Ver perfil
         </Link>
         {whatsapp ? (
-          <a className="btn btn-primary flex-1" href={link}>
+          <a
+            className="btn btn-primary flex-1"
+            href={link}
+            onClick={(e) => {
+              const ok = confirm(
+                'Oficios Pergamino no verifica identidades ni matrículas. Confirmá los datos con la persona, pedí presupuesto por escrito y no compartas datos ni hagas pagos por adelantado antes de contratar.\n\n¿Continuar a WhatsApp?'
+              );
+              if (!ok) e.preventDefault();
+            }}
+          >
             <MessageCircle size={17} /> Contactar
           </a>
         ) : null}
