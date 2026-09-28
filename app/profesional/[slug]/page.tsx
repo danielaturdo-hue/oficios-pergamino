@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { MapPin, MessageCircle, Flag, ShieldAlert } from 'lucide-react';
+import { MapPin, Flag, ShieldAlert } from 'lucide-react';
+import { ContactButton } from '@/components/ContactButton';
 
 export default async function Profile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -13,11 +14,6 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
     .maybeSingle();
 
   if (!p) return notFound();
-
-  const phone = String(p.telefono || '').replace(/\D/g, '').replace(/^0+/, '');
-  const whatsapp = phone && !phone.startsWith('54') ? '549' + phone : phone;
-  const message = 'Hola, encontré tu perfil en Oficios Pergamino. Quería consultar por un trabajo de ' + p.oficio + '.';
-  const link = 'https://wa.me/' + whatsapp + '?text=' + encodeURIComponent(message);
 
   return (
     <main className="py-8">
@@ -51,16 +47,18 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
                   Oficios Pergamino no verifica identidades ni matrículas. Confirmá con la persona sus datos,
                   su matrícula si el oficio la requiere, pedí presupuesto por escrito y acordá las condiciones
                   antes de contratar. Si algo te resulta sospechoso, no compartas datos personales ni hagas
-                  pagos por adelantado, y reportá el perfil.
+                  pagos por adelantado, y reportá el perfil. Más{' '}
+                  <a href="/seguridad" className="underline font-bold">
+                    consejos de seguridad
+                  </a>
+                  .
                 </p>
               </div>
             </div>
 
-            {whatsapp ? (
-              <a href={link} className="btn btn-primary mt-5 w-full md:w-auto">
-                <MessageCircle /> Contactar por WhatsApp
-              </a>
-            ) : null}
+            <div className="mt-5">
+              <ContactButton telefono={p.telefono} oficio={p.oficio} />
+            </div>
 
             <h2 className="text-2xl font-black mt-9">Reseñas</h2>
             <p className="muted mt-3">Todavía no tiene reseñas.</p>
