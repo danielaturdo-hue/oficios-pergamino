@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase';
 export default function Request() {
   const [done, setDone] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [nombre, setNombre] = useState('');
   const [titulo, setTitulo] = useState('');
   const [categoria, setCategoria] = useState('');
   const [descripcion, setDescripcion] = useState('');
@@ -61,6 +62,7 @@ export default function Request() {
 
             const { error } = await supabase.from('Solicitudes').insert([
               {
+                nombre: nombre,
                 titulo: titulo,
                 categoria: categoria,
                 descripcion: descripcion,
@@ -82,6 +84,13 @@ export default function Request() {
           }}
           className="card p-6 md:p-8 mt-7 space-y-5"
         >
+          <input
+            required
+            placeholder="Tu nombre"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            className="border rounded-xl p-3 w-full"
+          />
           <input
             required
             placeholder="Título: ej. Necesito arreglar una campera"
