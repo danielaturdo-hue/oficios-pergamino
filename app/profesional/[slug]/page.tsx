@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { MapPin, Flag, ShieldAlert } from 'lucide-react';
 import { ContactButton } from '@/components/ContactButton';
+import { ShareButton } from '@/components/ShareButton';
 
 export default async function Profile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -56,8 +57,9 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
               </div>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-5 flex flex-wrap gap-3">
               <ContactButton telefono={p.telefono} oficio={p.oficio} />
+              <ShareButton nombre={p.nombre} oficio={p.oficio} slug={'profesional-' + p.id} />
             </div>
 
             <h2 className="text-2xl font-black mt-9">Reseñas</h2>
