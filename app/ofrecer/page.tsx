@@ -56,7 +56,9 @@ export default function Offer() {
           <div className="card p-10 text-center">
             <div className="text-6xl">🎉</div>
             <h1 className="text-3xl font-black mt-4">¡Tu oficio quedó publicado!</h1>
-            <p className="muted mt-2">Ya podés aparecer en las búsquedas de Oficios Pergamino.</p>
+            <p className="muted mt-2">
+  Lo vamos a revisar y, en poco tiempo, vas a aparecer en las búsquedas de Oficios Pergamino.
+</p>
             <button onClick={() => router.push('/buscar')} className="btn btn-primary mt-6">
               Ver profesionales
             </button>
@@ -72,6 +74,10 @@ export default function Offer() {
         <p className="text-sm font-bold text-[#2f6b52]">PUBLICAR MI OFICIO</p>
         <h1 className="text-4xl font-black mt-2">Contanos qué hacés</h1>
         <p className="muted mt-2">Completá lo esencial. Después podrás ampliar tu perfil.</p>
+<div className="bg-[#e8f2eb] rounded-2xl p-4 mt-5 text-sm">
+  ✅ Revisamos cada perfil nuevo antes de publicarlo, para mantener el sitio confiable. Puede
+  tardar unas horas en aparecer.
+</div>
 
         <form
           onSubmit={async (e) => {
