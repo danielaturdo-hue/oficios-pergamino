@@ -5,14 +5,15 @@ import { Analytics } from '@vercel/analytics/next';
 export const metadata = {
   title: 'Oficios Pergamino | Profesionales y servicios en Pergamino',
   description:
-    'Encontrá electricistas, plomeros, pintores, gasistas, albañiles y otros profesionales de confianza en Pergamino. Contacto directo por WhatsApp.',
+    'Encontrá plomeros, electricistas, técnicos, personal de salud, gastronomía y otros profesionales de confianza en Pergamino. Contacto directo por WhatsApp.',
   keywords: [
     'oficios pergamino',
     'servicios pergamino',
-    'electricista pergamino',
-    'plomero pergamino',
-    'gasista pergamino',
-    'albañil pergamino',
+      'plomero pergamino',
+  'electricista pergamino',
+  'tecnico pergamino',
+  'gastronomia pergamino',
+  'salud pergamino',
     'profesionales pergamino',
     'oficios',
     'whatsapp',
