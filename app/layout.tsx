@@ -1,6 +1,10 @@
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Analytics } from '@vercel/analytics/next';
+import { Plus_Jakarta_Sans } from 'next/font/google';
+import { MobileBar } from '@/components/MobileBar';
+
+const fuente = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
 export const metadata = {
   title: 'Oficios Pergamino | Profesionales y servicios en Pergamino',
@@ -22,12 +26,13 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className={fuente.variable}>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001572770393484"
      crossOrigin="anonymous"></script>
       <body>
         <Header />
         {children}
+        <MobileBar />
         <footer className="border-t border-[#e7e2d8] mt-16 py-10">
           <div className="container flex flex-col md:flex-row gap-6 justify-between text-sm muted">
             <div className="max-w-sm">
@@ -36,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Encontrá profesionales y oficios de la ciudad, de forma simple y segura.
               </p>
               <p className="mt-4">Creado por Daniela Turdó en Pergamino, Argentina</p>
-              <p className="mt-1">© 2026 Oficios Pergamino · Sitio en etapa de prueba</p>
+              <p className="mt-1">© 2026 Oficios Pergamino · Versión beta</p>
             </div>
             <div className="flex flex-col gap-2">
               <a href="/terminos">Términos y condiciones</a>

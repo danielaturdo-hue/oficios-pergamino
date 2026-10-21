@@ -1,11 +1,32 @@
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Users, Search } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Users, Search, MessageCircle, Plus } from 'lucide-react';
 import { SearchBox } from '@/components/SearchBox';
 import { ProfessionalCard } from '@/components/ProfessionalCard';
 import { categories } from '@/lib/data';
 import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
+
+const META_PROFESIONALES = 30;
+
+const preguntas = [
+  {
+    q: '¿Cuesta algo usar Oficios Pergamino?',
+    a: 'No. Buscar profesionales y publicar tu oficio es gratis durante esta etapa beta.',
+  },
+  {
+    q: '¿Cómo sé si una persona es confiable?',
+    a: 'Oficios Pergamino no verifica identidades ni matrículas. Mirá el perfil y las fotos, pedí referencias, solicitá presupuesto por escrito y no hagas pagos por adelantado. Leé nuestros consejos de seguridad.',
+  },
+  {
+    q: '¿Cómo me sumo como profesional?',
+    a: 'Tocá "Ofrezco un oficio", completá el formulario con tu foto y tu WhatsApp, y tu perfil aparece en el sitio.',
+  },
+  {
+    q: '¿Cómo contacto a alguien?',
+    a: 'Directo por WhatsApp, sin intermediarios. Desde el perfil tocás "Contactar" y se abre la conversación con un mensaje ya escrito.',
+  },
+];
 
 const atajos = [
   { icon: '🔧', texto: 'Necesito un plomero', href: '/categorias/plomeria' },
@@ -47,7 +68,7 @@ export default async function Home() {
 
   return (
     <main>
-      <section className="bg-[#e8f2eb] py-14 md:py-24">
+      <section className="hero-bg py-12 md:py-24">
         <div className="container grid md:grid-cols-[1.15fr_.85fr] gap-10 items-center">
           <div>
             <span className="pill inline-block bg-white px-4 py-2 text-sm font-bold text-[#2f6b52]">
@@ -62,15 +83,49 @@ export default async function Home() {
             <div className="mt-8">
               <SearchBox />
             </div>
-            <div className="mt-4">
-              <Link href="/ofrecer" className="btn btn-yellow">
-                + Ofrezco un oficio
-              </Link>
+            <div className="mt-4 flex flex-wrap gap-2 md:hidden">
+              {atajos.map((a) => (
+                <Link
+                  key={a.href}
+                  href={a.href}
+                  className="pill bg-white border border-[#d5e3d9] px-4 py-2 text-sm font-semibold"
+                >
+                  {a.icon} {a.texto}
+                </Link>
+              ))}
             </div>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <Link href="/ofrecer" className="btn btn-yellow">
+                <Plus size={17} /> Ofrezco un oficio
+              </Link>
+              <span className="text-sm muted flex items-center gap-1.5">
+                <ShieldCheck size={16} className="text-[#2f6b52]" /> Gratis · Contacto directo por WhatsApp
+              </span>
+            </div>
+            {total >= 5 ? (
+              <div className="mt-6 max-w-sm">
+                <p className="font-bold text-sm text-[#2f6b52]">
+                  ✅ {total} profesionales ya se sumaron
+                </p>
+                {total < META_PROFESIONALES ? (
+                  <>
+                    <div className="mt-2 h-2.5 rounded-full bg-white overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#2f6b52]"
+                        style={{ width: Math.round((total / META_PROFESIONALES) * 100) + '%' }}
+                      />
+                    </div>
+                    <p className="text-xs muted mt-1.5">
+                      Faltan {META_PROFESIONALES - total} para llegar a {META_PROFESIONALES}. ¡Sumate gratis!
+                    </p>
+                  </>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
           <div className="hidden md:block">
-            <div className="card p-8" style={{ background: '#2f6b52', color: '#ffffff' }}>
+            <div className="card p-8 shadow-xl" style={{ background: '#2f6b52', color: '#ffffff' }}>
               <div className="text-5xl">🧰</div>
               <h2 className="text-3xl font-black mt-5" style={{ color: '#ffffff' }}>
                 ¿Qué necesitás resolver?
@@ -93,13 +148,29 @@ export default async function Home() {
                   </Link>
                 ))}
               </div>
-              {total >= 5 ? (
-                <p className="mt-6 font-bold" style={{ color: '#f4c95d' }}>
-                  ✅ {total} profesionales ya se sumaron
-                </p>
-              ) : null}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="py-10 bg-white border-b border-[#e7e2d8]">
+        <div className="container grid md:grid-cols-3 gap-6">
+          {[
+            { n: 1, icon: <Search size={22} />, t: 'Buscá', d: 'Por oficio, servicio o necesidad.' },
+            { n: 2, icon: <Users size={22} />, t: 'Elegí', d: 'Mirá perfiles, zonas y fotos.' },
+            { n: 3, icon: <MessageCircle size={22} />, t: 'Contactá', d: 'Directo por WhatsApp, sin intermediarios.' },
+          ].map((paso) => (
+            <div key={paso.n} className="flex items-start gap-4">
+              <div className="w-12 h-12 shrink-0 rounded-2xl bg-[#e8f2eb] text-[#2f6b52] flex items-center justify-center">
+                {paso.icon}
+              </div>
+              <div>
+                <p className="text-xs font-black text-[#2f6b52]">PASO {paso.n}</p>
+                <h3 className="font-black text-lg leading-tight">{paso.t}</h3>
+                <p className="muted text-sm mt-1">{paso.d}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -119,9 +190,9 @@ export default async function Home() {
               <Link
                 key={c.name}
                 href={'/categorias/' + c.slug}
-                className="card p-4 hover:-translate-y-1 transition"
+                className="card card-hover p-4"
               >
-                <div className="text-3xl">{c.icon}</div>
+                <div className="text-3xl" aria-hidden="true">{c.icon}</div>
                 <div className="font-bold text-sm mt-3">{c.name}</div>
               </Link>
             ))}
@@ -181,22 +252,27 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-10">
-        <div className="container grid md:grid-cols-3 gap-6 text-center">
-          <div>
-            <Search className="mx-auto text-[#2f6b52]" />
-            <h3 className="font-black mt-3">Buscá</h3>
-            <p className="muted text-sm mt-1">Por oficio, servicio o necesidad.</p>
-          </div>
-          <div>
-            <Users className="mx-auto text-[#2f6b52]" />
-            <h3 className="font-black mt-3">Elegí</h3>
-            <p className="muted text-sm mt-1">Mirá perfiles, zonas y fotos.</p>
-          </div>
-          <div>
-            <ShieldCheck className="mx-auto text-[#2f6b52]" />
-            <h3 className="font-black mt-3">Contactá</h3>
-            <p className="muted text-sm mt-1">Directo por WhatsApp.</p>
+      <section className="py-14">
+        <div className="container max-w-3xl">
+          <p className="text-sm font-bold text-[#2f6b52]">PREGUNTAS FRECUENTES</p>
+          <h2 className="text-3xl font-black mb-6">Antes de empezar</h2>
+          <div className="space-y-3">
+            {preguntas.map((f) => (
+              <details key={f.q} className="card px-5 py-4">
+                <summary className="flex items-center justify-between gap-4 font-bold">
+                  {f.q}
+                  <span className="faq-icon text-2xl text-[#2f6b52] transition-transform shrink-0" aria-hidden="true">+</span>
+                </summary>
+                <p className="muted mt-3 leading-7 text-sm">
+                  {f.a}{' '}
+                  {f.q.includes('confiable') ? (
+                    <Link href="/seguridad" className="underline font-bold text-[#2f6b52]">
+                      Ver consejos de seguridad
+                    </Link>
+                  ) : null}
+                </p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

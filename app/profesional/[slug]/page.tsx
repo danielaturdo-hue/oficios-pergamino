@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { MapPin, Flag, ShieldAlert } from 'lucide-react';
 import { ContactButton } from '@/components/ContactButton';
 import { ShareButton } from '@/components/ShareButton';
+import { nombrePropio, textoLimpio, iniciales, tieneFoto } from '@/lib/format';
 
 export default async function Profile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -16,20 +17,33 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
 
   if (!p) return notFound();
 
+  const nombre = nombrePropio(p.nombre);
+  const oficio = textoLimpio(p.oficio);
+  const zona = nombrePropio(p.localidad);
+
   return (
     <main className="py-8">
       <div className="container max-w-4xl">
         <div className="card overflow-hidden">
           <div className="h-32 bg-[#2f6b52]" />
           <div className="p-6 md:p-8 -mt-12">
-            <img src={p.foto || '/placeholder-work.svg'} alt="" className="w-28 h-28 rounded-3xl object-cover border-4 border-white" />
+            {tieneFoto(p.foto) ? (
+              <img src={p.foto} alt={'Foto de ' + nombre} className="w-28 h-28 rounded-3xl object-cover border-4 border-white bg-[#e8f2eb]" />
+            ) : (
+              <div
+                className="w-28 h-28 rounded-3xl border-4 border-white flex items-center justify-center text-4xl font-black text-white"
+                style={{ background: 'linear-gradient(135deg,#2f6b52,#4c9474)' }}
+              >
+                {iniciales(nombre)}
+              </div>
+            )}
             <div className="mt-4">
-              <h1 className="text-3xl font-black">{p.nombre}</h1>
-              <p className="text-xl font-bold text-[#2f6b52]">{p.oficio}</p>
+              <h1 className="text-3xl font-black">{nombre}</h1>
+              <p className="text-xl font-bold text-[#2f6b52]">{oficio}</p>
               {p.localidad ? (
                 <p className="muted mt-2 flex items-center gap-1">
                   <MapPin size={16} />
-                  {p.localidad}
+                  {zona}
                 </p>
               ) : null}
             </div>
@@ -38,7 +52,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
               <span className="pill bg-[#e8f2eb] px-3 py-1 text-sm font-bold">✓ Nuevo en Oficios Pergamino</span>
             </div>
 
-            {p.descripcion ? <p className="mt-7 leading-7">{p.descripcion}</p> : null}
+            {p.descripcion ? <p className="mt-7 leading-7">{textoLimpio(p.descripcion)}</p> : null}
 
             <div className="bg-[#fff4d2] rounded-2xl p-5 mt-8 flex gap-3">
               <ShieldAlert size={22} className="shrink-0 mt-0.5" />

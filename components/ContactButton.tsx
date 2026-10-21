@@ -24,7 +24,7 @@ export function ContactButton({ telefono, oficio }: { telefono: string; oficio: 
   return (
     <a
       href={link}
-      className="btn btn-primary"
+      className="btn btn-whatsapp"
       onClick={(e) => {
         const ok = confirm(
           'Oficios Pergamino no verifica identidades ni matrículas. Confirmá los datos con la persona, pedí presupuesto por escrito y no compartas datos ni hagas pagos por adelantado antes de contratar.\n\n¿Continuar a WhatsApp?'
