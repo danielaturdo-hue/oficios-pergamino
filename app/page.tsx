@@ -252,6 +252,26 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="py-10">
+        <div className="container">
+          <Link
+            href="/empleos"
+            className="card card-hover p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4"
+          >
+            <div>
+              <p className="text-sm font-bold text-[#2f6b52]">NUEVO</p>
+              <h2 className="text-2xl md:text-3xl font-black mt-1">💼 Empleos en Pergamino</h2>
+              <p className="muted mt-2">
+                Avisos de trabajo de la ciudad y búsquedas listas en LinkedIn, Bumeran y más.
+              </p>
+            </div>
+            <span className="btn btn-primary shrink-0">
+              Ver empleos <ArrowRight size={17} />
+            </span>
+          </Link>
+        </div>
+      </section>
+
       <section className="py-14 bg-white">
         <div className="container max-w-3xl">
           <div className="card p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
