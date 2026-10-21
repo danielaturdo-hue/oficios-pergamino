@@ -252,6 +252,36 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="py-14 bg-white">
+        <div className="container max-w-3xl">
+          <div className="card p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <img
+              src="/daniela.jpg"
+              alt="Daniela Turdó Giacomelli"
+              className="w-32 h-32 rounded-3xl object-cover shrink-0 border-4 border-[#e8f2eb]"
+            />
+            <div className="text-center sm:text-left">
+              <p className="text-sm font-bold text-[#2f6b52]">QUIÉN ESTÁ DETRÁS</p>
+              <h2 className="text-2xl font-black mt-1">Licenciada Daniela Turdó Giacomelli</h2>
+              <p className="muted text-sm mt-1">
+                Licenciada en Administración de Empresas (BYU-Idaho) · Pergamino, Buenos Aires
+              </p>
+              <p className="mt-4 leading-7">
+                Armé Oficios Pergamino para que encontrar a alguien de confianza en la ciudad sea simple, y para
+                que quienes tienen un oficio sean más fáciles de encontrar. Si tenés una sugerencia o querés
+                sumarte, escribime.
+              </p>
+              <a
+                href="mailto:oficios.pergamino@gmail.com"
+                className="btn btn-secondary mt-4 !py-2 !px-4 text-sm"
+              >
+                Escribime
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-14">
         <div className="container max-w-3xl">
           <p className="text-sm font-bold text-[#2f6b52]">PREGUNTAS FRECUENTES</p>
