@@ -44,21 +44,21 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
     <main className="py-8">
       <div className="container max-w-4xl">
         <div className="card overflow-hidden">
-          <div className="h-32 bg-[#2f6b52]" />
+          <div className="h-32 bg-[#6b1e2e]" />
           <div className="p-6 md:p-8 -mt-12">
             {tieneFoto(p.foto) ? (
-              <img src={p.foto} alt={'Foto de ' + nombre} className="w-28 h-28 rounded-3xl object-cover border-4 border-white bg-[#e8f2eb]" />
+              <img src={p.foto} alt={'Foto de ' + nombre} className="w-28 h-28 rounded-lg object-cover border-4 border-white bg-[#f3e3e3]" />
             ) : (
               <div
-                className="w-28 h-28 rounded-3xl border-4 border-white flex items-center justify-center text-4xl font-black text-white"
-                style={{ background: 'linear-gradient(135deg,#2f6b52,#4c9474)' }}
+                className="w-28 h-28 rounded-lg border-4 border-white flex items-center justify-center text-4xl font-semibold text-white"
+                style={{ background: 'linear-gradient(135deg,#6b1e2e,#8c3a4a)' }}
               >
                 {iniciales(nombre)}
               </div>
             )}
             <div className="mt-4">
-              <h1 className="text-3xl font-black">{nombre}</h1>
-              <p className="text-xl font-bold text-[#2f6b52]">{oficio}</p>
+              <h1 className="text-3xl font-semibold">{nombre}</h1>
+              <p className="text-xl font-bold text-[#6b1e2e]">{oficio}</p>
               {p.localidad ? (
                 <p className="muted mt-2 flex items-center gap-1">
                   <MapPin size={16} />
@@ -68,14 +68,14 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
             </div>
 
             <div className="flex flex-wrap gap-2 mt-5">
-              <span className="pill bg-[#e8f2eb] px-3 py-1 text-sm font-bold">✓ Nuevo en Oficios Pergamino</span>
+              <span className="pill bg-[#f3e3e3] px-3 py-1 text-sm font-bold">✓ Nuevo en Oficios Pergamino</span>
               {anios > 0 ? (
-                <span className="pill bg-[#f1f3f0] px-3 py-1 text-sm font-bold">
+                <span className="pill bg-[#f2e8d3] px-3 py-1 text-sm font-bold">
                   {anios === 1 ? '1 año' : anios + ' años'} de experiencia
                 </span>
               ) : null}
               {trabajos.length > 0 ? (
-                <span className="pill bg-[#f1f3f0] px-3 py-1 text-sm font-bold flex items-center gap-1">
+                <span className="pill bg-[#f2e8d3] px-3 py-1 text-sm font-bold flex items-center gap-1">
                   <Camera size={14} /> {trabajos.length === 1 ? '1 trabajo con fotos' : trabajos.length + ' trabajos con fotos'}
                 </span>
               ) : null}
@@ -85,7 +85,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
 
             {trabajos.length > 0 ? (
               <>
-                <h2 className="text-2xl font-black mt-9">Trabajos realizados</h2>
+                <h2 className="text-2xl font-semibold mt-9">Trabajos realizados</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
                   {trabajos.map((src, i) => (
                     <a key={src} href={src} target="_blank" rel="noopener noreferrer" className="block">
@@ -93,7 +93,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
                         src={src}
                         alt={'Trabajo realizado por ' + nombre + ' (' + (i + 1) + ')'}
                         loading="lazy"
-                        className="w-full aspect-square rounded-2xl object-cover bg-[#e8f2eb]"
+                        className="w-full aspect-square rounded-md object-cover bg-[#f3e3e3]"
                       />
                     </a>
                   ))}
@@ -101,10 +101,10 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
               </>
             ) : null}
 
-            <div className="bg-[#fff4d2] rounded-2xl p-5 mt-8 flex gap-3">
+            <div className="bg-[#f4e6c8] rounded-md p-5 mt-8 flex gap-3">
               <ShieldAlert size={22} className="shrink-0 mt-0.5" />
               <div className="text-sm leading-6">
-                <p className="font-black">Antes de contactar</p>
+                <p className="font-semibold">Antes de contactar</p>
                 <p className="mt-1">
                   Oficios Pergamino no verifica identidades ni matrículas. Confirmá con la persona sus datos,
                   su matrícula si el oficio la requiere, pedí presupuesto por escrito y acordá las condiciones
@@ -128,7 +128,7 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
               <ShareButton nombre={p.nombre} oficio={p.oficio} slug={'profesional-' + p.id} />
             </div>
 
-            <h2 className="text-2xl font-black mt-9">Reseñas</h2>
+            <h2 className="text-2xl font-semibold mt-9">Reseñas</h2>
             <p className="muted mt-3">Todavía no tiene reseñas.</p>
 
             <ReportButton profesionalId={String(p.id)} />

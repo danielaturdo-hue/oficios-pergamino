@@ -19,11 +19,11 @@ export default function Empleos() {
     <main>
       <section className="hero-bg py-12 md:py-16">
         <div className="container">
-          <span className="pill inline-block bg-white px-4 py-2 text-sm font-bold text-[#2f6b52]">
+          <span className="pill inline-block bg-white px-4 py-2 text-sm font-bold text-[#6b1e2e]">
             💼 Trabajo en Pergamino
           </span>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight mt-5 leading-[1.05]">
-            Empleos en <span className="text-[#2f6b52]">Pergamino</span>
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mt-5 leading-[1.05]">
+            Empleos en <span className="text-[#6b1e2e]">Pergamino</span>
           </h1>
           <p className="text-lg muted mt-4 max-w-2xl">
             Avisos de la ciudad y búsquedas ya armadas en los principales portales, todo en un solo lugar.
@@ -33,8 +33,8 @@ export default function Empleos() {
 
       <section className="py-12">
         <div className="container">
-          <p className="text-sm font-bold text-[#2f6b52]">BUSCÁ DIRECTO</p>
-          <h2 className="text-3xl font-black mb-6">Ver empleos en Pergamino</h2>
+          <p className="text-sm font-bold text-[#6b1e2e]">BUSCÁ DIRECTO</p>
+          <h2 className="text-3xl font-semibold mb-6">Ver empleos en Pergamino</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {buscadores.map((b) => (
               <a
@@ -45,10 +45,10 @@ export default function Empleos() {
                 className="card card-hover p-5 flex items-center justify-between gap-3"
               >
                 <div>
-                  <p className="font-black">{b.nombre}</p>
+                  <p className="font-semibold">{b.nombre}</p>
                   <p className="text-sm muted mt-1">{b.descripcion}</p>
                 </div>
-                <ArrowUpRight size={20} className="text-[#2f6b52] shrink-0" />
+                <ArrowUpRight size={20} className="text-[#6b1e2e] shrink-0" />
               </a>
             ))}
           </div>
@@ -57,25 +57,25 @@ export default function Empleos() {
 
       <section className="pb-12">
         <div className="container">
-          <p className="text-sm font-bold text-[#2f6b52]">AVISOS</p>
-          <h2 className="text-3xl font-black mb-6">Avisos destacados</h2>
+          <p className="text-sm font-bold text-[#6b1e2e]">AVISOS</p>
+          <h2 className="text-3xl font-semibold mb-6">Avisos destacados</h2>
 
           {empleos.length ? (
             <div className="grid md:grid-cols-2 gap-4">
               {empleos.map((e) => (
                 <article key={e.url} className="card card-hover p-5 flex flex-col gap-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-[#e8f2eb] text-[#2f6b52] flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-md bg-[#f3e3e3] text-[#6b1e2e] flex items-center justify-center shrink-0">
                       <Briefcase size={20} />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-black text-lg leading-snug">{e.puesto}</h3>
+                      <h3 className="font-semibold text-lg leading-snug">{e.puesto}</h3>
                       <p className="muted text-sm mt-0.5">{e.empresa}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="pill bg-[#f1f3f0] px-3 py-1 font-semibold">{e.fuente}</span>
-                    {e.fecha ? <span className="pill bg-[#fff4d2] px-3 py-1">{e.fecha}</span> : null}
+                    <span className="pill bg-[#f2e8d3] px-3 py-1 font-semibold">{e.fuente}</span>
+                    {e.fecha ? <span className="pill bg-[#f4e6c8] px-3 py-1">{e.fecha}</span> : null}
                   </div>
                   <a
                     href={e.url}
@@ -91,7 +91,7 @@ export default function Empleos() {
           ) : (
             <div className="card p-8 text-center">
               <p className="text-3xl" aria-hidden="true">💼</p>
-              <p className="font-black text-lg mt-3">Estamos cargando los primeros avisos</p>
+              <p className="font-semibold text-lg mt-3">Estamos cargando los primeros avisos</p>
               <p className="muted mt-2 max-w-xl mx-auto">
                 Mientras tanto, usá las búsquedas de arriba. Si tu comercio necesita personal, publicá tu aviso acá.
               </p>
@@ -107,12 +107,12 @@ export default function Empleos() {
 
       <section className="pb-14">
         <div className="container grid md:grid-cols-2 gap-5">
-          <div className="card p-8" style={{ background: '#2f6b52', color: '#ffffff' }}>
+          <div className="card p-8" style={{ background: '#6b1e2e', color: '#ffffff' }}>
             <Store size={30} />
-            <h2 className="text-2xl font-black mt-4" style={{ color: '#ffffff' }}>
+            <h2 className="text-2xl font-semibold mt-4" style={{ color: '#ffffff' }}>
               ¿Tu comercio busca personal?
             </h2>
-            <p className="mt-3" style={{ color: '#e8f2eb' }}>
+            <p className="mt-3" style={{ color: '#f3e3e3' }}>
               Publicá tu aviso y llegá a gente de Pergamino. Escribinos y lo cargamos.
             </p>
             <a href={mailComercio} className="btn btn-yellow mt-6">
@@ -120,8 +120,8 @@ export default function Empleos() {
             </a>
           </div>
           <div className="card p-8">
-            <ShieldAlert size={30} className="text-[#2f6b52]" />
-            <h2 className="text-2xl font-black mt-4">Cuidado con las estafas</h2>
+            <ShieldAlert size={30} className="text-[#6b1e2e]" />
+            <h2 className="text-2xl font-semibold mt-4">Cuidado con las estafas</h2>
             <p className="muted mt-3 leading-7">
               Ninguna empresa seria te pide plata para darte un trabajo. Verificá siempre la empresa antes de
               compartir tus datos personales.

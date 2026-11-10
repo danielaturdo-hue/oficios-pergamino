@@ -98,14 +98,14 @@ export default function Privacy() {
   return (
     <main className="py-10">
       <div className="container max-w-3xl">
-        <h1 className="text-4xl font-black">Política de privacidad</h1>
+        <h1 className="text-4xl font-semibold">Política de privacidad</h1>
         <p className="muted mt-2">
           Última actualización: septiembre de 2026. Oficios Pergamino se encuentra en etapa de prueba.
         </p>
 
         {secciones.map((s) => (
           <section key={s.titulo} className="mt-9">
-            <h2 className="text-2xl font-black">{s.titulo}</h2>
+            <h2 className="text-2xl font-semibold">{s.titulo}</h2>
             {s.parrafos.map((t, i) => (
               <p key={i} className="mt-3 leading-7">
                 {t}

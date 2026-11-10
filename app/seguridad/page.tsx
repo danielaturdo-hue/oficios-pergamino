@@ -36,8 +36,8 @@ export default function Seguridad() {
   return (
     <main className="py-10">
       <div className="container max-w-3xl">
-        <p className="text-sm font-bold text-[#2f6b52]">TU SEGURIDAD PRIMERO</p>
-        <h1 className="text-4xl font-black mt-2">Consejos antes de contratar o trabajar</h1>
+        <p className="text-sm font-bold text-[#6b1e2e]">TU SEGURIDAD PRIMERO</p>
+        <h1 className="text-4xl font-semibold mt-2">Consejos antes de contratar o trabajar</h1>
         <p className="muted mt-3 leading-7">
           Oficios Pergamino conecta personas, pero no participa en los acuerdos entre ellas ni verifica
           identidades. Estos consejos te ayudan a cuidarte, sea que busques un servicio o que lo ofrezcas.
@@ -46,15 +46,15 @@ export default function Seguridad() {
         <div className="grid md:grid-cols-2 gap-4 mt-8">
           {consejos.map((c) => (
             <div key={c.titulo} className="card p-6">
-              <c.icon className="text-[#2f6b52]" size={26} />
-              <h2 className="font-black text-lg mt-3">{c.titulo}</h2>
+              <c.icon className="text-[#6b1e2e]" size={26} />
+              <h2 className="font-semibold text-lg mt-3">{c.titulo}</h2>
               <p className="text-sm muted mt-2 leading-6">{c.texto}</p>
             </div>
           ))}
         </div>
 
-        <div className="card p-6 mt-8 bg-[#e8f2eb]">
-          <p className="font-black">¿Necesitás reportar algo?</p>
+        <div className="card p-6 mt-8 bg-[#f3e3e3]">
+          <p className="font-semibold">¿Necesitás reportar algo?</p>
           <p className="text-sm mt-2">
             Escribinos a{' '}
             <a href="mailto:oficios.pergamino@gmail.com" className="underline font-bold">

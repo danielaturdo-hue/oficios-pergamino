@@ -23,7 +23,7 @@ export default function Request() {
         <div className="container max-w-xl">
           <div className="card p-10 text-center">
             <div className="text-6xl">📣</div>
-            <h1 className="text-3xl font-black mt-4">Recibimos tu pedido</h1>
+            <h1 className="text-3xl font-semibold mt-4">Recibimos tu pedido</h1>
             <p className="muted mt-2">
               Lo vamos a revisar y, una vez aprobado, aparece en la sección Pedidos durante 30 días, para que
               profesionales te contacten por WhatsApp. El sitio está en etapa de prueba, así que no podemos
@@ -41,8 +41,8 @@ export default function Request() {
   return (
     <main className="py-10">
       <div className="container max-w-3xl">
-        <p className="text-sm font-bold text-[#2f6b52]">NECESITO CONTRATAR UN SERVICIO</p>
-        <h1 className="text-4xl font-black mt-2">¿Qué necesitás resolver?</h1>
+        <p className="text-sm font-bold text-[#6b1e2e]">NECESITO CONTRATAR UN SERVICIO</p>
+        <h1 className="text-4xl font-semibold mt-2">¿Qué necesitás resolver?</h1>
         <p className="muted mt-2">
           Este formulario es para quien necesita contratar a un profesional. También podés buscar directamente
           en la sección de profesionales.
@@ -89,20 +89,20 @@ export default function Request() {
             placeholder="Tu nombre"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
-            className="border rounded-xl p-3 w-full"
+            className="border rounded p-3 w-full"
           />
           <input
             required
             placeholder="Título: ej. Necesito arreglar una campera"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
-            className="border rounded-xl p-3 w-full"
+            className="border rounded p-3 w-full"
           />
           <select
             required
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
-            className="border rounded-xl p-3 w-full"
+            className="border rounded p-3 w-full"
           >
             <option value="">Categoría</option>
             {categories.map((c) => (
@@ -116,7 +116,7 @@ export default function Request() {
             placeholder="Describí el trabajo que necesitás"
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
-            className="border rounded-xl p-3 w-full min-h-32"
+            className="border rounded p-3 w-full min-h-32"
           />
           <div className="grid md:grid-cols-2 gap-4">
             <input
@@ -124,26 +124,26 @@ export default function Request() {
               placeholder="Zona / barrio"
               value={zona}
               onChange={(e) => setZona(e.target.value)}
-              className="border rounded-xl p-3"
+              className="border rounded p-3"
             />
             <input
               placeholder="Fecha aproximada (opcional)"
               value={fecha}
               onChange={(e) => setFecha(e.target.value)}
-              className="border rounded-xl p-3"
+              className="border rounded p-3"
             />
             <input
               placeholder="Presupuesto estimado (opcional)"
               value={presupuesto}
               onChange={(e) => setPresupuesto(e.target.value)}
-              className="border rounded-xl p-3"
+              className="border rounded p-3"
             />
             <input
               required
               placeholder="Tu WhatsApp (ej. 2477123456)"
               value={contacto}
               onChange={(e) => setContacto(e.target.value)}
-              className="border rounded-xl p-3"
+              className="border rounded p-3"
             />
           </div>
 

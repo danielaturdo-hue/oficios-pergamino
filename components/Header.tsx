@@ -12,14 +12,14 @@ const links = [
 export function Header() {
   const pathname = usePathname();
   return (
-    <header className="sticky top-0 z-40 border-b border-[#e7e2d8] bg-[#fffaf0]/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[#e6d9c3] bg-[#fbf5e9]/90 backdrop-blur">
       <nav className="container flex items-center justify-between gap-4 h-16">
-        <Link href="/" className="flex items-center gap-2 font-black text-lg shrink-0">
+        <Link href="/" className="flex items-center gap-2 font-display font-semibold text-xl shrink-0">
           <span className="text-2xl" aria-hidden="true">🧰</span>
           <span>
-            Oficios <span className="text-[#2f6b52]">Pergamino</span>
+            Oficios <span className="text-[#6b1e2e]">Pergamino</span>
           </span>
-          <span className="pill bg-[#f4c95d] text-[#2d2b22] text-[10px] font-black px-2 py-0.5 uppercase tracking-wide">
+          <span className="pill bg-[#c8963e] text-[#2b1a1d] text-[10px] font-semibold px-2 py-0.5 uppercase tracking-wide">
             Beta
           </span>
         </Link>
@@ -29,8 +29,8 @@ export function Header() {
               key={l.href}
               href={l.href}
               className={
-                'hidden sm:inline-block px-3 py-2 rounded-xl text-sm font-semibold transition hover:bg-[#e8f2eb] ' +
-                (pathname === l.href ? 'bg-[#e8f2eb] text-[#2f6b52]' : '')
+                'hidden sm:inline-block px-3 py-2 rounded text-sm font-semibold transition hover:bg-[#f3e3e3] ' +
+                (pathname === l.href ? 'bg-[#f3e3e3] text-[#6b1e2e]' : '')
               }
             >
               {l.texto}

@@ -44,7 +44,7 @@ export default function Login() {
     <main className="py-16">
       <div className="container max-w-md">
         <div className="card p-7">
-          <h1 className="text-3xl font-black">Ingresar</h1>
+          <h1 className="text-3xl font-semibold">Ingresar</h1>
 
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
             <input
@@ -52,7 +52,7 @@ export default function Login() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border rounded-xl p-3 w-full"
+              className="border rounded p-3 w-full"
             />
 
             <input
@@ -60,7 +60,7 @@ export default function Login() {
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border rounded-xl p-3 w-full"
+              className="border rounded p-3 w-full"
             />
 
             <button

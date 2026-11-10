@@ -68,8 +68,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <main className="py-10">
       <div className="container">
         <div className="max-w-3xl">
-          <p className="text-sm font-bold text-[#2f6b52]">BUSCAR EN PERGAMINO</p>
-          <h1 className="text-4xl font-black mt-2">{q ? `Resultados para “${q}”` : 'Encontrá un oficio'}</h1>
+          <p className="text-sm font-bold text-[#6b1e2e]">BUSCAR EN PERGAMINO</p>
+          <h1 className="text-4xl font-semibold mt-2">{q ? `Resultados para “${q}”` : 'Encontrá un oficio'}</h1>
           <div className="mt-6">
             <SearchBox initial={q} zona={zonaSel} />
           </div>
@@ -86,7 +86,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         {!filtered.length && (
           <div className="card p-10 text-center mt-8">
             <div className="text-5xl">🔎</div>
-            <h2 className="text-2xl font-black mt-4">Todavía no encontramos a alguien</h2>
+            <h2 className="text-2xl font-semibold mt-4">Todavía no encontramos a alguien</h2>
             <p className="muted mt-2">
               {zonaSel
                 ? 'Probá con otra zona o buscá en toda la ciudad.'

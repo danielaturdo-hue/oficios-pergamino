@@ -34,8 +34,8 @@ export default async function Pedidos() {
     <main className="py-10">
       <div className="container">
         <div className="max-w-3xl">
-          <p className="text-sm font-bold text-[#2f6b52]">PEDIDOS DE SERVICIOS</p>
-          <h1 className="text-4xl font-black mt-2">Personas que necesitan un profesional</h1>
+          <p className="text-sm font-bold text-[#6b1e2e]">PEDIDOS DE SERVICIOS</p>
+          <h1 className="text-4xl font-semibold mt-2">Personas que necesitan un profesional</h1>
           <p className="muted mt-2">
             Si ofrecés un servicio, mirá qué necesita la gente de Pergamino y escribile directo por WhatsApp.
             Los pedidos se muestran durante 30 días.
@@ -58,10 +58,10 @@ export default async function Pedidos() {
               return (
                 <article key={p.id} className="card p-6 flex flex-col gap-3">
                   <div className="flex flex-wrap gap-2 items-center text-xs">
-                    <span className="pill bg-[#e8f2eb] px-3 py-1 font-bold">{p.categoria}</span>
+                    <span className="pill bg-[#f3e3e3] px-3 py-1 font-bold">{p.categoria}</span>
                     <span className="muted">{hace(p.created_at)}</span>
                   </div>
-                  <h2 className="text-xl font-black">{p.titulo}</h2>
+                  <h2 className="text-xl font-semibold">{p.titulo}</h2>
                   <p className="leading-7">{p.descripcion}</p>
                   <p className="text-sm muted">
                     📍 {p.zona}

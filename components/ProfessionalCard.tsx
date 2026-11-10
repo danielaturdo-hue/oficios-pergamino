@@ -23,19 +23,19 @@ export function ProfessionalCard({ p }: { p: Professional }) {
     <article className="card card-hover p-4 flex flex-col gap-4 h-full">
       <div className="flex gap-4">
         {tieneFoto(foto) ? (
-          <img src={foto} alt={'Foto de ' + nombre} className="w-20 h-20 rounded-2xl object-cover shrink-0 bg-[#e8f2eb]" />
+          <img src={foto} alt={'Foto de ' + nombre} className="w-20 h-20 rounded-md object-cover shrink-0 bg-[#f3e3e3]" />
         ) : (
           <div
-            className="w-20 h-20 rounded-2xl shrink-0 flex items-center justify-center text-2xl font-black text-white"
-            style={{ background: 'linear-gradient(135deg,#2f6b52,#4c9474)' }}
+            className="w-20 h-20 rounded-md shrink-0 flex items-center justify-center text-2xl font-semibold text-white"
+            style={{ background: 'linear-gradient(135deg,#6b1e2e,#8c3a4a)' }}
             aria-hidden="true"
           >
             {iniciales(nombre)}
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="font-black text-lg truncate">{nombre}</h3>
-          <p className="font-semibold text-[#2f6b52] line-clamp-2 text-sm mt-0.5">{oficio}</p>
+          <h3 className="font-semibold text-lg truncate">{nombre}</h3>
+          <p className="font-semibold text-[#6b1e2e] line-clamp-2 text-sm mt-0.5">{oficio}</p>
           {zona ? (
             <p className="text-sm muted flex items-center gap-1 mt-1">
               <MapPin size={14} className="shrink-0" />
@@ -49,24 +49,24 @@ export function ProfessionalCard({ p }: { p: Professional }) {
 
       <div className="flex flex-wrap gap-2 text-xs">
         {p.category && p.category !== 'General' ? (
-          <span className="pill bg-[#f1f3f0] px-3 py-1 font-semibold">{p.category}</span>
+          <span className="pill bg-[#f2e8d3] px-3 py-1 font-semibold">{p.category}</span>
         ) : null}
         {p.years > 0 ? (
-          <span className="pill bg-[#f1f3f0] px-3 py-1 font-semibold">
+          <span className="pill bg-[#f2e8d3] px-3 py-1 font-semibold">
             {p.years === 1 ? '1 año' : p.years + ' años'} de experiencia
           </span>
         ) : null}
         {trabajos > 0 ? (
-          <span className="pill bg-[#f1f3f0] px-3 py-1 flex items-center gap-1 font-semibold">
+          <span className="pill bg-[#f2e8d3] px-3 py-1 flex items-center gap-1 font-semibold">
             <Camera size={13} /> {trabajos === 1 ? '1 trabajo con fotos' : trabajos + ' trabajos con fotos'}
           </span>
         ) : null}
         {p.reviews > 0 ? (
-          <span className="pill bg-[#fff4d2] px-3 py-1 flex items-center gap-1">
+          <span className="pill bg-[#f4e6c8] px-3 py-1 flex items-center gap-1">
             <Star size={13} fill="currentColor" /> {p.rating} ({p.reviews})
           </span>
         ) : (
-          <span className="pill bg-[#e8f2eb] text-[#2f6b52] px-3 py-1 font-semibold">Nuevo</span>
+          <span className="pill bg-[#f3e3e3] text-[#6b1e2e] px-3 py-1 font-semibold">Nuevo</span>
         )}
       </div>
 

@@ -20,7 +20,7 @@ export function ReportButton({ profesionalId }: { profesionalId: string }) {
 
   if (estado === 'enviado') {
     return (
-      <p className="text-sm mt-6 flex items-center gap-2 text-[#2f6b52] font-semibold" role="status">
+      <p className="text-sm mt-6 flex items-center gap-2 text-[#6b1e2e] font-semibold" role="status">
         <Flag size={15} /> Gracias. Vamos a revisar este perfil.
       </p>
     );
@@ -50,7 +50,7 @@ export function ReportButton({ profesionalId }: { profesionalId: string }) {
         setEstado(error ? 'error' : 'enviado');
       }}
     >
-      <p className="font-black">Reportar este perfil</p>
+      <p className="font-semibold">Reportar este perfil</p>
       <label className="block text-sm font-semibold" htmlFor="motivo-reporte">
         ¿Qué pasó?
       </label>
@@ -59,7 +59,7 @@ export function ReportButton({ profesionalId }: { profesionalId: string }) {
         required
         value={motivo}
         onChange={(e) => setMotivo(e.target.value)}
-        className="border rounded-xl p-3 w-full"
+        className="border rounded p-3 w-full"
       >
         <option value="">Elegí un motivo</option>
         {MOTIVOS.map((m) => (
@@ -73,7 +73,7 @@ export function ReportButton({ profesionalId }: { profesionalId: string }) {
         placeholder="Contanos más (opcional). No escribas datos personales tuyos."
         value={detalle}
         onChange={(e) => setDetalle(e.target.value)}
-        className="border rounded-xl p-3 w-full min-h-24"
+        className="border rounded p-3 w-full min-h-24"
         aria-label="Detalle del reporte"
       />
       {estado === 'error' ? (

@@ -2,10 +2,11 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Header } from '@/components/Header';
 import { Analytics } from '@vercel/analytics/next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Poppins, Playfair_Display } from 'next/font/google';
 import { MobileBar } from '@/components/MobileBar';
 
-const fuente = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
+const cuerpo = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-sans', display: 'swap' });
+const titulos = Playfair_Display({ subsets: ['latin'], variable: '--font-display', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://oficios-pergamino.vercel.app'),
@@ -36,14 +37,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={fuente.variable}>
+    <html lang="es" className={cuerpo.variable + ' ' + titulos.variable}>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1001572770393484"
      crossOrigin="anonymous"></script>
       <body>
         <Header />
         {children}
         <MobileBar />
-        <footer className="border-t border-[#e7e2d8] mt-16 py-10">
+        <footer className="border-t border-[#e6d9c3] mt-16 py-10">
           <div className="container flex flex-col md:flex-row gap-6 justify-between text-sm muted">
             <div className="max-w-sm">
               <div className="font-bold text-base">Oficios Pergamino</div>

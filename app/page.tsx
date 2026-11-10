@@ -43,11 +43,11 @@ export default async function Home() {
       <section className="hero-bg py-12 md:py-24">
         <div className="container grid md:grid-cols-[1.15fr_.85fr] gap-10 items-center">
           <div>
-            <span className="pill inline-block bg-white px-4 py-2 text-sm font-bold text-[#2f6b52]">
+            <span className="pill inline-block bg-white px-4 py-2 text-sm font-bold text-[#6b1e2e]">
               📍 Pergamino, Buenos Aires
             </span>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mt-5 leading-[1.05]">
-              Encontrá a la persona que necesitás, <span className="text-[#2f6b52]">cerca tuyo.</span>
+            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight mt-5 leading-[1.05]">
+              Encontrá a la persona que necesitás, <span className="text-[#6b1e2e]">cerca tuyo.</span>
             </h1>
             <p className="text-lg md:text-xl muted mt-5 max-w-xl">
               Oficios y servicios de Pergamino, en un solo lugar.
@@ -60,24 +60,24 @@ export default async function Home() {
                 <Link
                   key={a.href}
                   href={a.href}
-                  className="pill bg-white border border-[#d5e3d9] px-4 py-2 text-sm font-semibold"
+                  className="pill bg-white border border-[#e3c9c9] px-4 py-2 text-sm font-semibold"
                 >
                   {a.icon} {a.texto}
                 </Link>
               ))}
             </div>
             <p className="mt-5 text-sm muted flex items-center gap-1.5">
-              <ShieldCheck size={16} className="text-[#2f6b52]" /> Gratis · Contacto directo por WhatsApp
+              <ShieldCheck size={16} className="text-[#6b1e2e]" /> Gratis · Contacto directo por WhatsApp
             </p>
           </div>
 
           <div className="hidden md:block">
-            <div className="card p-8 shadow-xl" style={{ background: '#2f6b52', color: '#ffffff' }}>
+            <div className="card p-8 shadow-xl" style={{ background: '#6b1e2e', color: '#ffffff' }}>
               <div className="text-5xl">🧰</div>
-              <h2 className="text-3xl font-black mt-5" style={{ color: '#ffffff' }}>
+              <h2 className="text-3xl font-semibold mt-5" style={{ color: '#ffffff' }}>
                 ¿Qué necesitás resolver?
               </h2>
-              <p className="mt-2" style={{ color: '#e8f2eb' }}>
+              <p className="mt-2" style={{ color: '#f3e3e3' }}>
                 Elegí una opción o escribí arriba lo que buscás.
               </p>
               <div className="mt-6 space-y-3">
@@ -85,8 +85,8 @@ export default async function Home() {
                   <Link
                     key={a.href}
                     href={a.href}
-                    className="flex items-center justify-between rounded-xl p-4 font-bold hover:-translate-y-1 transition"
-                    style={{ background: '#ffffff', color: '#1f2d26' }}
+                    className="flex items-center justify-between rounded p-4 font-bold hover:-translate-y-1 transition"
+                    style={{ background: '#ffffff', color: '#2b1a1d' }}
                   >
                     <span>
                       {a.icon} {a.texto}
@@ -100,7 +100,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-10 bg-white border-b border-[#e7e2d8]">
+      <section className="py-10 bg-white border-b border-[#e6d9c3]">
         <div className="container grid md:grid-cols-3 gap-6">
           {[
             { n: 1, icon: <Search size={22} />, t: 'Buscá', d: 'Por oficio, servicio o necesidad.' },
@@ -108,12 +108,12 @@ export default async function Home() {
             { n: 3, icon: <MessageCircle size={22} />, t: 'Contactá', d: 'Directo por WhatsApp, sin intermediarios.' },
           ].map((paso) => (
             <div key={paso.n} className="flex items-start gap-4">
-              <div className="w-12 h-12 shrink-0 rounded-2xl bg-[#e8f2eb] text-[#2f6b52] flex items-center justify-center">
+              <div className="w-12 h-12 shrink-0 rounded-md bg-[#f3e3e3] text-[#6b1e2e] flex items-center justify-center">
                 {paso.icon}
               </div>
               <div>
-                <p className="text-xs font-black text-[#2f6b52]">PASO {paso.n}</p>
-                <h3 className="font-black text-lg leading-tight">{paso.t}</h3>
+                <p className="text-xs font-semibold text-[#6b1e2e]">PASO {paso.n}</p>
+                <h3 className="font-semibold text-lg leading-tight">{paso.t}</h3>
                 <p className="muted text-sm mt-1">{paso.d}</p>
               </div>
             </div>
@@ -125,10 +125,10 @@ export default async function Home() {
         <div className="container">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm font-bold text-[#2f6b52]">EXPLORÁ</p>
-              <h2 className="text-3xl font-black">¿Qué necesitás?</h2>
+              <p className="text-sm font-bold text-[#6b1e2e]">EXPLORÁ</p>
+              <h2 className="text-3xl font-semibold">¿Qué necesitás?</h2>
             </div>
-            <Link href="/buscar" className="font-bold text-[#2f6b52]">
+            <Link href="/buscar" className="font-bold text-[#6b1e2e]">
               Ver todo <ArrowRight size={16} className="inline" />
             </Link>
           </div>
@@ -151,10 +151,10 @@ export default async function Home() {
         <div className="container">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm font-bold text-[#2f6b52]">NUEVOS</p>
-              <h2 className="text-3xl font-black">Últimos en sumarse</h2>
+              <p className="text-sm font-bold text-[#6b1e2e]">NUEVOS</p>
+              <h2 className="text-3xl font-semibold">Últimos en sumarse</h2>
             </div>
-            <Link href="/buscar" className="font-bold text-[#2f6b52]">
+            <Link href="/buscar" className="font-bold text-[#6b1e2e]">
               Ver todos <ArrowRight size={16} className="inline" />
             </Link>
           </div>
@@ -175,12 +175,12 @@ export default async function Home() {
 
       <section className="py-16">
         <div className="container grid md:grid-cols-2 gap-5">
-          <div className="card p-8" style={{ background: '#2f6b52', color: '#ffffff' }}>
+          <div className="card p-8" style={{ background: '#6b1e2e', color: '#ffffff' }}>
             <div className="text-4xl">🛠️</div>
-            <h2 className="text-3xl font-black mt-4" style={{ color: '#ffffff' }}>
+            <h2 className="text-3xl font-semibold mt-4" style={{ color: '#ffffff' }}>
               ¿Tenés un oficio?
             </h2>
-            <p className="mt-3" style={{ color: '#e8f2eb' }}>
+            <p className="mt-3" style={{ color: '#f3e3e3' }}>
               Mostrá lo que hacés y encontrá personas de Pergamino que necesitan tus servicios.
             </p>
             {total >= 5 ? (
@@ -193,10 +193,10 @@ export default async function Home() {
                     <div className="mt-2 h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,.25)' }}>
                       <div
                         className="h-full rounded-full"
-                        style={{ background: '#f4c95d', width: Math.round((total / META_PROFESIONALES) * 100) + '%' }}
+                        style={{ background: '#c8963e', width: Math.round((total / META_PROFESIONALES) * 100) + '%' }}
                       />
                     </div>
-                    <p className="text-xs mt-1.5" style={{ color: '#e8f2eb' }}>
+                    <p className="text-xs mt-1.5" style={{ color: '#f3e3e3' }}>
                       Faltan {META_PROFESIONALES - total} para llegar a {META_PROFESIONALES}. ¡Sumate gratis!
                     </p>
                   </>
@@ -213,7 +213,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="card p-8">
-            <h2 className="text-3xl font-black">¿Necesitás contratar un servicio?</h2>
+            <h2 className="text-3xl font-semibold">¿Necesitás contratar un servicio?</h2>
             <p className="muted mt-3">
               Contanos qué necesitás y profesionales de la zona podrán contactarte.
             </p>
@@ -231,8 +231,8 @@ export default async function Home() {
             className="card card-hover p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4"
           >
             <div>
-              <p className="text-sm font-bold text-[#2f6b52]">NUEVO</p>
-              <h2 className="text-2xl md:text-3xl font-black mt-1">💼 Empleos en Pergamino</h2>
+              <p className="text-sm font-bold text-[#6b1e2e]">NUEVO</p>
+              <h2 className="text-2xl md:text-3xl font-semibold mt-1">💼 Empleos en Pergamino</h2>
               <p className="muted mt-2">
                 Avisos de trabajo de la ciudad y búsquedas listas en LinkedIn, Bumeran y más.
               </p>
@@ -250,11 +250,11 @@ export default async function Home() {
             <img
               src="/daniela.jpg"
               alt="Daniela Turdó Giacomelli"
-              className="w-32 h-32 rounded-3xl object-cover shrink-0 border-4 border-[#e8f2eb]"
+              className="w-32 h-32 rounded-lg object-cover shrink-0 border-4 border-[#f3e3e3]"
             />
             <div className="text-center sm:text-left">
-              <p className="text-sm font-bold text-[#2f6b52]">QUIÉN ESTÁ DETRÁS</p>
-              <h2 className="text-2xl font-black mt-1">Licenciada Daniela Turdó Giacomelli</h2>
+              <p className="text-sm font-bold text-[#6b1e2e]">QUIÉN ESTÁ DETRÁS</p>
+              <h2 className="text-2xl font-semibold mt-1">Licenciada Daniela Turdó Giacomelli</h2>
               <p className="muted text-sm mt-1">
                 Licenciada en Administración de Empresas (BYU-Idaho) · Pergamino, Buenos Aires
               </p>
@@ -276,19 +276,19 @@ export default async function Home() {
 
       <section className="py-14">
         <div className="container max-w-3xl">
-          <p className="text-sm font-bold text-[#2f6b52]">PREGUNTAS FRECUENTES</p>
-          <h2 className="text-3xl font-black mb-6">Antes de empezar</h2>
+          <p className="text-sm font-bold text-[#6b1e2e]">PREGUNTAS FRECUENTES</p>
+          <h2 className="text-3xl font-semibold mb-6">Antes de empezar</h2>
           <div className="space-y-3">
             {preguntas.map((f) => (
               <details key={f.q} className="card px-5 py-4">
                 <summary className="flex items-center justify-between gap-4 font-bold">
                   {f.q}
-                  <span className="faq-icon text-2xl text-[#2f6b52] transition-transform shrink-0" aria-hidden="true">+</span>
+                  <span className="faq-icon text-2xl text-[#6b1e2e] transition-transform shrink-0" aria-hidden="true">+</span>
                 </summary>
                 <p className="muted mt-3 leading-7 text-sm">
                   {f.a}{' '}
                   {f.q.includes('confiable') ? (
-                    <Link href="/seguridad" className="underline font-bold text-[#2f6b52]">
+                    <Link href="/seguridad" className="underline font-bold text-[#6b1e2e]">
                       Ver consejos de seguridad
                     </Link>
                   ) : null}

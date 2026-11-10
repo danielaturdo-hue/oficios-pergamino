@@ -26,7 +26,7 @@ export function SearchBox({ initial = '', zona = '' }: { initial?: string; zona?
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Ej: albañil, costurera, electricista…"
-          className="w-full rounded-2xl border border-[#ddd7cb] bg-white px-12 py-4 outline-none focus:ring-2 focus:ring-[#2f6b52]"
+          className="w-full rounded-md border border-[#d9c9ae] bg-white px-12 py-4 outline-none focus:ring-2 focus:ring-[#6b1e2e]"
         />
       </div>
       <button className="btn btn-primary px-8">Buscar</button>

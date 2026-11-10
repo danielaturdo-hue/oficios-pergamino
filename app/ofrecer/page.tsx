@@ -75,7 +75,7 @@ export default function Offer() {
         <div className="container max-w-xl">
           <div className="card p-10 text-center">
             <div className="text-6xl">🎉</div>
-            <h1 className="text-3xl font-black mt-4">¡Recibimos tu perfil!</h1>
+            <h1 className="text-3xl font-semibold mt-4">¡Recibimos tu perfil!</h1>
             <p className="muted mt-2">
               Lo revisamos antes de publicarlo y, cuando lo aprobemos, vas a aparecer en las búsquedas de Oficios
               Pergamino. Suele tardar unas horas.
@@ -92,10 +92,10 @@ export default function Offer() {
   return (
     <main className="py-10">
       <div className="container max-w-3xl">
-        <p className="text-sm font-bold text-[#2f6b52]">PUBLICAR MI OFICIO</p>
-        <h1 className="text-4xl font-black mt-2">Contanos qué hacés</h1>
+        <p className="text-sm font-bold text-[#6b1e2e]">PUBLICAR MI OFICIO</p>
+        <h1 className="text-4xl font-semibold mt-2">Contanos qué hacés</h1>
         <p className="muted mt-2">Completá lo esencial. Después podrás ampliar tu perfil.</p>
-<div className="bg-[#e8f2eb] rounded-2xl p-4 mt-5 text-sm">
+<div className="bg-[#f3e3e3] rounded-md p-4 mt-5 text-sm">
   ✅ Revisamos cada perfil nuevo antes de publicarlo, para mantener el sitio confiable. Puede
   tardar unas horas en aparecer. Escribí con oraciones completas y sin abreviaturas: los perfiles
   prolijos reciben más consultas.
@@ -200,7 +200,7 @@ export default function Offer() {
           className="card p-6 md:p-8 mt-7 space-y-7"
         >
           <fieldset>
-            <legend className="font-black text-xl">Datos personales</legend>
+            <legend className="font-semibold text-xl">Datos personales</legend>
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <input
                 required
@@ -208,14 +208,14 @@ export default function Offer() {
                 maxLength={60}
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="border rounded-xl p-3"
+                className="border rounded p-3"
               />
               <input
                 required
                 placeholder="WhatsApp (ej. 2477123456)"
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
-                className="border rounded-xl p-3"
+                className="border rounded p-3"
               />
               <input
                 required
@@ -223,19 +223,19 @@ export default function Offer() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="border rounded-xl p-3"
+                className="border rounded p-3"
               />
             </div>
           </fieldset>
 
           <fieldset>
-            <legend className="font-black text-xl">Mi oficio</legend>
+            <legend className="font-semibold text-xl">Mi oficio</legend>
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <select
                 required
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
-                className="border rounded-xl p-3"
+                className="border rounded p-3"
               >
                 <option value="">Categoría</option>
                 {categories.map((c) => (
@@ -250,7 +250,7 @@ export default function Offer() {
                 placeholder="Tu oficio principal (ej. Plomero, Costurera)"
                 value={oficio}
                 onChange={(e) => setOficio(e.target.value)}
-                className="border rounded-xl p-3"
+                className="border rounded p-3"
               />
             </div>
             <p className="text-xs muted mt-2">
@@ -266,7 +266,7 @@ export default function Offer() {
               aria-label="Años de experiencia"
               value={anios}
               onChange={(e) => setAnios(e.target.value)}
-              className="border rounded-xl p-3 w-full mt-4"
+              className="border rounded p-3 w-full mt-4"
             />
             <textarea
               required
@@ -275,7 +275,7 @@ export default function Offer() {
               placeholder="Ej: Reparo pérdidas, destapo cañerías e instalo termotanques y artefactos de baño. Trabajo en todo Pergamino. Presupuesto sin cargo."
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
-              className="border rounded-xl p-3 w-full mt-4 min-h-28"
+              className="border rounded p-3 w-full mt-4 min-h-28"
             />
             <p className="text-xs muted mt-2">
               Contá qué trabajos hacés y cómo trabajás, con oraciones completas. {descripcion.length}/400
@@ -283,7 +283,7 @@ export default function Offer() {
           </fieldset>
 
           <fieldset>
-            <legend className="font-black text-xl">Zona</legend>
+            <legend className="font-semibold text-xl">Zona</legend>
             <div className="mt-4">
               <input
                 required
@@ -292,7 +292,7 @@ export default function Offer() {
                 placeholder="Barrio o zona donde trabajás (ej. Centro)"
                 value={localidad}
                 onChange={(e) => setLocalidad(e.target.value)}
-                className="border rounded-xl p-3 w-full"
+                className="border rounded p-3 w-full"
               />
               <datalist id="zonas-sugeridas">
                 {zonas.map((z) => (
@@ -306,7 +306,7 @@ export default function Offer() {
           </fieldset>
 
           <fieldset>
-            <legend className="font-black text-xl">Foto de perfil (obligatoria)</legend>
+            <legend className="font-semibold text-xl">Foto de perfil (obligatoria)</legend>
             <input
               type="file"
               required
@@ -316,16 +316,16 @@ export default function Offer() {
                 setFoto(archivo);
                 setVista(archivo ? URL.createObjectURL(archivo) : '');
               }}
-              className="border rounded-xl p-3 w-full mt-4"
+              className="border rounded p-3 w-full mt-4"
             />
             <p className="text-xs muted mt-2">La foto se mostrará públicamente en tu perfil.</p>
             {vista ? (
-              <img src={vista} alt="" className="w-24 h-24 rounded-2xl object-cover mt-3" />
+              <img src={vista} alt="" className="w-24 h-24 rounded-md object-cover mt-3" />
             ) : null}
           </fieldset>
 
           <fieldset>
-            <legend className="font-black text-xl">Fotos de tus trabajos (opcional)</legend>
+            <legend className="font-semibold text-xl">Fotos de tus trabajos (opcional)</legend>
             <p className="text-xs muted mt-2">
               Subí hasta {MAX_FOTOS_TRABAJOS} fotos de trabajos que hayas hecho. Los perfiles con fotos de trabajos
               generan más confianza.
@@ -340,12 +340,12 @@ export default function Offer() {
                 setTrabajos(archivos);
                 setVistaTrabajos(archivos.map((a) => URL.createObjectURL(a)));
               }}
-              className="border rounded-xl p-3 w-full mt-4"
+              className="border rounded p-3 w-full mt-4"
             />
             {vistaTrabajos.length ? (
               <div className="flex gap-3 mt-3">
                 {vistaTrabajos.map((v) => (
-                  <img key={v} src={v} alt="" className="w-24 h-24 rounded-2xl object-cover" />
+                  <img key={v} src={v} alt="" className="w-24 h-24 rounded-md object-cover" />
                 ))}
               </div>
             ) : null}

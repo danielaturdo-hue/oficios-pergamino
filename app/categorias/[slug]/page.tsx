@@ -44,7 +44,7 @@ export default async function Category({
       <div className="container">
         <div className="max-w-3xl">
           <span className="text-5xl">{c.icon}</span>
-          <h1 className="text-4xl font-black mt-4">{c.name} en Pergamino</h1>
+          <h1 className="text-4xl font-semibold mt-4">{c.name} en Pergamino</h1>
           <p className="muted text-lg mt-2">
             Encontrá profesionales y servicios de {c.name.toLowerCase()} en Pergamino.
           </p>
