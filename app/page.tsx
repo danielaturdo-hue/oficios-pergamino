@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Users, Search, MessageCircle, Plus } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Users, Search, MessageCircle } from 'lucide-react';
 import { SearchBox } from '@/components/SearchBox';
 import { ProfessionalCard } from '@/components/ProfessionalCard';
 import { categories } from '@/lib/data';
-import { supabase } from '@/lib/supabase';
+import { listarProfesionales, contarProfesionales } from '@/lib/profesionales';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,36 +35,8 @@ const atajos = [
 ];
 
 export default async function Home() {
-  const { data } = await supabase
-    .from('Profesionales')
-    .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan')
-    .order('created_at', { ascending: false })
-    .limit(4);
-
-  const { data: todos } = await supabase.from('Profesionales').select('id');
-  const total = todos ? todos.length : 0;
-
-  const nuevos = (data || []).map((p: any) => ({
-    id: String(p.id),
-    slug: 'profesional-' + p.id,
-    name: p.nombre || '',
-    trade: p.oficio || '',
-    category: p.categoria || 'General',
-    zone: p.localidad || '',
-    description: p.descripcion || '',
-    years: 0,
-    home: true,
-    quotes: true,
-    rating: 5,
-    reviews: 0,
-    jobs: 0,
-    available: true,
-    services: [],
-    hours: '',
-    whatsapp: p.telefono || '',
-    badges: [],
-    photos: [p.foto || '/placeholder-work.svg'],
-  }));
+  const nuevos = await listarProfesionales({ limite: 4 });
+  const total = await contarProfesionales();
 
   return (
     <main>
@@ -94,34 +66,9 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Link href="/ofrecer" className="btn btn-yellow">
-                <Plus size={17} /> Ofrezco un oficio
-              </Link>
-              <span className="text-sm muted flex items-center gap-1.5">
-                <ShieldCheck size={16} className="text-[#2f6b52]" /> Gratis · Contacto directo por WhatsApp
-              </span>
-            </div>
-            {total >= 5 ? (
-              <div className="mt-6 max-w-sm">
-                <p className="font-bold text-sm text-[#2f6b52]">
-                  ✅ {total} profesionales ya se sumaron
-                </p>
-                {total < META_PROFESIONALES ? (
-                  <>
-                    <div className="mt-2 h-2.5 rounded-full bg-white overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-[#2f6b52]"
-                        style={{ width: Math.round((total / META_PROFESIONALES) * 100) + '%' }}
-                      />
-                    </div>
-                    <p className="text-xs muted mt-1.5">
-                      Faltan {META_PROFESIONALES - total} para llegar a {META_PROFESIONALES}. ¡Sumate gratis!
-                    </p>
-                  </>
-                ) : null}
-              </div>
-            ) : null}
+            <p className="mt-5 text-sm muted flex items-center gap-1.5">
+              <ShieldCheck size={16} className="text-[#2f6b52]" /> Gratis · Contacto directo por WhatsApp
+            </p>
           </div>
 
           <div className="hidden md:block">
@@ -236,9 +183,34 @@ export default async function Home() {
             <p className="mt-3" style={{ color: '#e8f2eb' }}>
               Mostrá lo que hacés y encontrá personas de Pergamino que necesitan tus servicios.
             </p>
-            <Link href="/ofrecer" className="btn btn-yellow mt-6">
-              Publicar mi oficio <ArrowRight size={17} />
-            </Link>
+            {total >= 5 ? (
+              <div className="mt-6 max-w-sm">
+                <p className="font-bold text-sm" style={{ color: '#ffffff' }}>
+                  ✅ {total} profesionales ya se sumaron
+                </p>
+                {total < META_PROFESIONALES ? (
+                  <>
+                    <div className="mt-2 h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,.25)' }}>
+                      <div
+                        className="h-full rounded-full"
+                        style={{ background: '#f4c95d', width: Math.round((total / META_PROFESIONALES) * 100) + '%' }}
+                      />
+                    </div>
+                    <p className="text-xs mt-1.5" style={{ color: '#e8f2eb' }}>
+                      Faltan {META_PROFESIONALES - total} para llegar a {META_PROFESIONALES}. ¡Sumate gratis!
+                    </p>
+                  </>
+                ) : null}
+              </div>
+            ) : null}
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <Link href="/ofrecer" className="btn btn-yellow">
+                Publicar mi oficio <ArrowRight size={17} />
+              </Link>
+              <Link href="/pedidos" className="text-sm font-bold underline" style={{ color: '#ffffff' }}>
+                Ver qué necesita la gente
+              </Link>
+            </div>
           </div>
           <div className="card p-8">
             <h2 className="text-3xl font-black">¿Necesitás contratar un servicio?</h2>

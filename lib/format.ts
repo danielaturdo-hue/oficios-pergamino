@@ -34,3 +34,22 @@ export function iniciales(nombre: string): string {
 export function tieneFoto(src?: string): boolean {
   return !!src && !src.includes('placeholder-work');
 }
+
+
+// Para comparar zonas y búsquedas sin importar mayúsculas ni tildes
+export function normalizar(texto: string): string {
+  return String(texto || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// true si el texto está casi todo en mayúsculas ("PINTURA EN GENERAL")
+export function esTodoMayusculas(texto: string): boolean {
+  const letras = String(texto || '').replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/g, '');
+  if (letras.length < 12) return false;
+  const mayus = letras.replace(/[^A-ZÁÉÍÓÚÜÑ]/g, '').length;
+  return mayus / letras.length > 0.7;
+}

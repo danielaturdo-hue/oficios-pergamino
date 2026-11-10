@@ -1,40 +1,43 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { categories } from '@/lib/data';
-import { supabase } from '@/lib/supabase';
+import { listarProfesionales, zonasDe, claveZona } from '@/lib/profesionales';
 import { ProfessionalCard } from '@/components/ProfessionalCard';
+import { ZonaFiltro } from '@/components/ZonaFiltro';
 
-export default async function Category({ params }: { params: Promise<{ slug: string }> }) {
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const c = categories.find((x) => x.slug === slug);
+  if (!c) return { title: 'Categoría no encontrada' };
+  return {
+    title: c.name + ' en Pergamino',
+    description:
+      'Profesionales de ' +
+      c.name.toLowerCase() +
+      ' en Pergamino. Mirá perfiles, zonas y trabajos realizados, y contactá directo por WhatsApp.',
+    alternates: { canonical: '/categorias/' + c.slug },
+  };
+}
+
+export default async function Category({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ zona?: string }>;
+}) {
+  const { slug } = await params;
+  const sp = await searchParams;
   const c = categories.find((x) => x.slug === slug);
   if (!c) return notFound();
 
-  const { data } = await supabase
-    .from('Profesionales')
-    .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan')
-    .eq('categoria', c.name);
-
-  const ps = (data || []).map((p: any) => ({
-    id: String(p.id),
-    slug: 'profesional-' + p.id,
-    name: p.nombre || '',
-    trade: p.oficio || '',
-    category: p.categoria || c.name,
-    zone: p.localidad || '',
-    description: p.descripcion || '',
-    years: 0,
-    home: true,
-    quotes: true,
-    rating: 5,
-    reviews: 0,
-    jobs: 0,
-    available: true,
-    services: [],
-    hours: '',
-    whatsapp: p.telefono || '',
-    badges: [],
-    photos: [p.foto || '/placeholder-work.svg'],
-  }));
+  const zonaSel = claveZona(sp.zona || '');
+  const todos = await listarProfesionales({ categoria: c.name });
+  const zonas = zonasDe(todos);
+  const ps = zonaSel ? todos.filter((p) => claveZona(p.zone) === zonaSel) : todos;
 
   return (
     <main className="py-10">
@@ -56,12 +59,16 @@ export default async function Category({ params }: { params: Promise<{ slug: str
           </Link>
         </div>
 
+        <ZonaFiltro zonas={zonas} activa={zonaSel} base={'/categorias/' + c.slug} />
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {ps.length ? (
             ps.map((p) => <ProfessionalCard key={p.id} p={p} />)
           ) : (
             <div className="card p-8 md:col-span-2 lg:col-span-3">
-              Todavía no hay profesionales en esta categoría. ¡Podés ser el primero!{' '}
+              {zonaSel
+                ? 'No hay profesionales de esta categoría en esa zona todavía. Probá con otra zona o con toda la ciudad.'
+                : 'Todavía no hay profesionales en esta categoría. ¡Podés ser el primero!'}{' '}
               <Link href="/ofrecer" className="underline font-bold">
                 Publicá tu oficio
               </Link>

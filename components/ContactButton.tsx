@@ -2,10 +2,21 @@
 
 import { useState } from 'react';
 import { MessageCircle, Eye } from 'lucide-react';
+import { registrarClic } from '@/lib/clics';
 
-export function ContactButton({ telefono, oficio }: { telefono: string; oficio: string }) {
+export function ContactButton({
+  telefono,
+  oficio,
+  profesionalId,
+  categoria,
+}: {
+  telefono: string;
+  oficio: string;
+  profesionalId: string;
+  categoria: string;
+}) {
   const [mostrar, setMostrar] = useState(false);
-  
+
   const phone = String(telefono || '').replace(/\D/g, '').replace(/^0+/, '');
   const whatsapp = phone && !phone.startsWith('54') ? '549' + phone : phone;
   if (!whatsapp) return null;
@@ -20,7 +31,7 @@ export function ContactButton({ telefono, oficio }: { telefono: string; oficio: 
       </button>
     );
   }
-  
+
   return (
     <a
       href={link}
@@ -29,7 +40,11 @@ export function ContactButton({ telefono, oficio }: { telefono: string; oficio: 
         const ok = confirm(
           'Oficios Pergamino no verifica identidades ni matrículas. Confirmá los datos con la persona, pedí presupuesto por escrito y no compartas datos ni hagas pagos por adelantado antes de contratar.\n\n¿Continuar a WhatsApp?'
         );
-        if (!ok) e.preventDefault();
+        if (!ok) {
+          e.preventDefault();
+          return;
+        }
+        registrarClic(profesionalId, categoria, 'perfil');
       }}
     >
       <MessageCircle size={17} /> Contactar por WhatsApp

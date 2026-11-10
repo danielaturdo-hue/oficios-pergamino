@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { categories } from '@/lib/data';
 import { supabase } from '@/lib/supabase';
+import { esTodoMayusculas } from '@/lib/format';
+import { zonasSugeridas } from '@/lib/profesionales';
 
 async function reducirFoto(archivo: File): Promise<Blob> {
   const bitmap = await createImageBitmap(archivo);
@@ -24,6 +26,16 @@ async function reducirFoto(archivo: File): Promise<Blob> {
     );
   });
 }
+
+async function subirFoto(archivo: File, prefijo: string): Promise<string> {
+  const reducida = await reducirFoto(archivo);
+  const nombreArchivo = prefijo + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+  const { error } = await supabase.storage.from('fotos').upload(nombreArchivo, reducida, { contentType: 'image/jpeg' });
+  if (error) throw new Error(error.message);
+  return supabase.storage.from('fotos').getPublicUrl(nombreArchivo).data.publicUrl;
+}
+
+const MAX_FOTOS_TRABAJOS = 3;
 
 const OFICIOS_GENERICOS = ['varios', 'varios oficios', 'todo', 'todo tipo de trabajos', 'otros', 'otro'];
 
@@ -47,6 +59,14 @@ export default function Offer() {
   const [localidad, setLocalidad] = useState('');
   const [foto, setFoto] = useState<File | null>(null);
   const [vista, setVista] = useState('');
+  const [anios, setAnios] = useState('');
+  const [trabajos, setTrabajos] = useState<File[]>([]);
+  const [vistaTrabajos, setVistaTrabajos] = useState<string[]>([]);
+  const [zonas, setZonas] = useState<string[]>([]);
+
+  useEffect(() => {
+    zonasSugeridas().then(setZonas).catch(() => {});
+  }, []);
   const router = useRouter();
 
   if (done) {
@@ -55,10 +75,11 @@ export default function Offer() {
         <div className="container max-w-xl">
           <div className="card p-10 text-center">
             <div className="text-6xl">🎉</div>
-            <h1 className="text-3xl font-black mt-4">¡Tu oficio quedó publicado!</h1>
+            <h1 className="text-3xl font-black mt-4">¡Recibimos tu perfil!</h1>
             <p className="muted mt-2">
-  Lo vamos a revisar y, en poco tiempo, vas a aparecer en las búsquedas de Oficios Pergamino.
-</p>
+              Lo revisamos antes de publicarlo y, cuando lo aprobemos, vas a aparecer en las búsquedas de Oficios
+              Pergamino. Suele tardar unas horas.
+            </p>
             <button onClick={() => router.push('/buscar')} className="btn btn-primary mt-6">
               Ver profesionales
             </button>
@@ -76,7 +97,8 @@ export default function Offer() {
         <p className="muted mt-2">Completá lo esencial. Después podrás ampliar tu perfil.</p>
 <div className="bg-[#e8f2eb] rounded-2xl p-4 mt-5 text-sm">
   ✅ Revisamos cada perfil nuevo antes de publicarlo, para mantener el sitio confiable. Puede
-  tardar unas horas en aparecer.
+  tardar unas horas en aparecer. Escribí con oraciones completas y sin abreviaturas: los perfiles
+  prolijos reciben más consultas.
 </div>
 
         <form
@@ -104,6 +126,11 @@ export default function Offer() {
               return;
             }
 
+            if (esTodoMayusculas(descripcion) || esTodoMayusculas(oficioLimpio)) {
+              alert('Evitá escribir todo en mayúsculas. Un texto normal se lee mejor y da más confianza.');
+              return;
+            }
+
             setEnviando(true);
 
             let fotoUrl = '';
@@ -127,22 +154,40 @@ export default function Offer() {
               }
             }
 
-            const { error } = await supabase.from('Profesionales').insert([
-              {
-                nombre: nombreLimpio,
-                apellido: '',
-                oficio: oficioLimpio,
-                telefono: telefono,
-                email: emailLimpio,
-                descripcion: descripcion,
-                localidad: localidad,
-                categoria: categoria,
-                foto: fotoUrl,
-                verificado: false,
-                plan: 'gratis',
-                acepto_terminos_at: new Date().toISOString(),
-              },
+            let fotosTrabajos: string[] = [];
+            if (trabajos.length) {
+              try {
+                fotosTrabajos = await Promise.all(trabajos.map((f) => subirFoto(f, 'trabajo-')));
+              } catch (err) {
+                alert('No se pudo subir una de las fotos de trabajos. Probá con otras imágenes (JPG o PNG).');
+                setEnviando(false);
+                return;
+              }
+            }
+
+            const datosBase = {
+              nombre: nombreLimpio,
+              apellido: '',
+              oficio: oficioLimpio,
+              telefono: telefono,
+              email: emailLimpio,
+              descripcion: descripcion.trim(),
+              localidad: localidad.trim(),
+              categoria: categoria,
+              foto: fotoUrl,
+              verificado: false,
+              plan: 'gratis',
+              acepto_terminos_at: new Date().toISOString(),
+            };
+
+            let { error } = await supabase.from('Profesionales').insert([
+              { ...datosBase, anios_experiencia: Number(anios), fotos_trabajos: fotosTrabajos },
             ]);
+
+            // Si la migración 002 todavía no se ejecutó en Supabase, guarda sin los datos nuevos.
+            if (error && /column|schema cache/i.test(error.message)) {
+              ({ error } = await supabase.from('Profesionales').insert([datosBase]));
+            }
 
             if (error) {
               alert(error.message);
@@ -159,7 +204,8 @@ export default function Offer() {
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <input
                 required
-                placeholder="Nombre"
+                placeholder="Nombre (como te van a ver los clientes)"
+                maxLength={60}
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="border rounded-xl p-3"
@@ -210,13 +256,30 @@ export default function Offer() {
             <p className="text-xs muted mt-2">
               Escribí un solo oficio principal. Los demás trabajos que hacés, contalos en la descripción.
             </p>
+            <input
+              required
+              type="number"
+              inputMode="numeric"
+              min={0}
+              max={60}
+              placeholder="Años de experiencia (ej. 8)"
+              aria-label="Años de experiencia"
+              value={anios}
+              onChange={(e) => setAnios(e.target.value)}
+              className="border rounded-xl p-3 w-full mt-4"
+            />
             <textarea
               required
-              placeholder="Contá qué trabajos hacés, tu experiencia y en qué zonas trabajás"
+              minLength={30}
+              maxLength={400}
+              placeholder="Ej: Reparo pérdidas, destapo cañerías e instalo termotanques y artefactos de baño. Trabajo en todo Pergamino. Presupuesto sin cargo."
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               className="border rounded-xl p-3 w-full mt-4 min-h-28"
             />
+            <p className="text-xs muted mt-2">
+              Contá qué trabajos hacés y cómo trabajás, con oraciones completas. {descripcion.length}/400
+            </p>
           </fieldset>
 
           <fieldset>
@@ -224,11 +287,21 @@ export default function Offer() {
             <div className="mt-4">
               <input
                 required
-                placeholder="Barrio / zona"
+                list="zonas-sugeridas"
+                maxLength={40}
+                placeholder="Barrio o zona donde trabajás (ej. Centro)"
                 value={localidad}
                 onChange={(e) => setLocalidad(e.target.value)}
                 className="border rounded-xl p-3 w-full"
               />
+              <datalist id="zonas-sugeridas">
+                {zonas.map((z) => (
+                  <option key={z} value={z} />
+                ))}
+              </datalist>
+              <p className="text-xs muted mt-2">
+                Elegí una zona de la lista si coincide con la tuya, así te encuentran más fácil.
+              </p>
             </div>
           </fieldset>
 
@@ -251,6 +324,33 @@ export default function Offer() {
             ) : null}
           </fieldset>
 
+          <fieldset>
+            <legend className="font-black text-xl">Fotos de tus trabajos (opcional)</legend>
+            <p className="text-xs muted mt-2">
+              Subí hasta {MAX_FOTOS_TRABAJOS} fotos de trabajos que hayas hecho. Los perfiles con fotos de trabajos
+              generan más confianza.
+            </p>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              aria-label="Fotos de trabajos"
+              onChange={(e) => {
+                const archivos = Array.from(e.target.files || []).slice(0, MAX_FOTOS_TRABAJOS);
+                setTrabajos(archivos);
+                setVistaTrabajos(archivos.map((a) => URL.createObjectURL(a)));
+              }}
+              className="border rounded-xl p-3 w-full mt-4"
+            />
+            {vistaTrabajos.length ? (
+              <div className="flex gap-3 mt-3">
+                {vistaTrabajos.map((v) => (
+                  <img key={v} src={v} alt="" className="w-24 h-24 rounded-2xl object-cover" />
+                ))}
+              </div>
+            ) : null}
+          </fieldset>
+
           <label className="flex gap-3 items-start text-sm leading-6">
             <input type="checkbox" required className="mt-1" />
             <span>
@@ -262,7 +362,7 @@ export default function Offer() {
               <Link href="/privacidad" target="_blank" className="underline font-bold">
                 Política de privacidad
               </Link>
-              , y acepto que mi nombre, oficio, zona, foto y WhatsApp se muestren públicamente.
+              , y acepto que mi nombre, oficio, zona, años de experiencia, fotos y WhatsApp se muestren públicamente.
             </span>
           </label>
 

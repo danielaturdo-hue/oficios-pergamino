@@ -1,25 +1,44 @@
 import { notFound } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import { MapPin, Flag, ShieldAlert } from 'lucide-react';
+import type { Metadata } from 'next';
+import { obtenerProfesional } from '@/lib/profesionales';
+import { MapPin, ShieldAlert, Camera } from 'lucide-react';
 import { ContactButton } from '@/components/ContactButton';
 import { ShareButton } from '@/components/ShareButton';
+import { ReportButton } from '@/components/ReportButton';
 import { nombrePropio, textoLimpio, iniciales, tieneFoto } from '@/lib/format';
+
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const p = await obtenerProfesional(slug.replace('profesional-', ''));
+  if (!p) return { title: 'Perfil no encontrado' };
+
+  const nombre = nombrePropio(p.nombre);
+  const oficio = textoLimpio(p.oficio);
+  const zona = nombrePropio(p.localidad);
+  const descripcion = textoLimpio(p.descripcion);
+
+  return {
+    title: nombre + ' · ' + oficio + (zona ? ' en ' + zona : ' en Pergamino'),
+    description: (descripcion || oficio + ' en Pergamino.').slice(0, 155),
+    alternates: { canonical: '/profesional/' + slug },
+    ...(tieneFoto(p.foto) ? { openGraph: { images: [p.foto] } } : {}),
+  };
+}
 
 export default async function Profile({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const id = slug.replace('profesional-', '');
 
-  const { data: p } = await supabase
-    .from('Profesionales')
-    .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan')
-    .eq('id', id)
-    .maybeSingle();
-
+  const p = await obtenerProfesional(id);
   if (!p) return notFound();
 
   const nombre = nombrePropio(p.nombre);
   const oficio = textoLimpio(p.oficio);
   const zona = nombrePropio(p.localidad);
+  const anios = Number(p.anios_experiencia) || 0;
+  const trabajos: string[] = Array.isArray(p.fotos_trabajos) ? p.fotos_trabajos.filter(Boolean) : [];
 
   return (
     <main className="py-8">
@@ -50,9 +69,37 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
 
             <div className="flex flex-wrap gap-2 mt-5">
               <span className="pill bg-[#e8f2eb] px-3 py-1 text-sm font-bold">✓ Nuevo en Oficios Pergamino</span>
+              {anios > 0 ? (
+                <span className="pill bg-[#f1f3f0] px-3 py-1 text-sm font-bold">
+                  {anios === 1 ? '1 año' : anios + ' años'} de experiencia
+                </span>
+              ) : null}
+              {trabajos.length > 0 ? (
+                <span className="pill bg-[#f1f3f0] px-3 py-1 text-sm font-bold flex items-center gap-1">
+                  <Camera size={14} /> {trabajos.length === 1 ? '1 trabajo con fotos' : trabajos.length + ' trabajos con fotos'}
+                </span>
+              ) : null}
             </div>
 
             {p.descripcion ? <p className="mt-7 leading-7">{textoLimpio(p.descripcion)}</p> : null}
+
+            {trabajos.length > 0 ? (
+              <>
+                <h2 className="text-2xl font-black mt-9">Trabajos realizados</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+                  {trabajos.map((src, i) => (
+                    <a key={src} href={src} target="_blank" rel="noopener noreferrer" className="block">
+                      <img
+                        src={src}
+                        alt={'Trabajo realizado por ' + nombre + ' (' + (i + 1) + ')'}
+                        loading="lazy"
+                        className="w-full aspect-square rounded-2xl object-cover bg-[#e8f2eb]"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </>
+            ) : null}
 
             <div className="bg-[#fff4d2] rounded-2xl p-5 mt-8 flex gap-3">
               <ShieldAlert size={22} className="shrink-0 mt-0.5" />
@@ -72,16 +119,19 @@ export default async function Profile({ params }: { params: Promise<{ slug: stri
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
-              <ContactButton telefono={p.telefono} oficio={p.oficio} />
+              <ContactButton
+                telefono={p.telefono}
+                oficio={p.oficio}
+                profesionalId={String(p.id)}
+                categoria={p.categoria || ''}
+              />
               <ShareButton nombre={p.nombre} oficio={p.oficio} slug={'profesional-' + p.id} />
             </div>
 
             <h2 className="text-2xl font-black mt-9">Reseñas</h2>
             <p className="muted mt-3">Todavía no tiene reseñas.</p>
 
-            <button className="text-sm muted flex items-center gap-2 mt-6">
-              <Flag size={15} /> Reportar perfil
-            </button>
+            <ReportButton profesionalId={String(p.id)} />
           </div>
         </div>
       </div>

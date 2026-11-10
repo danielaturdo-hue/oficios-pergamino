@@ -10,7 +10,9 @@ const secciones = [
   {
     titulo: 'Qué datos recopilamos',
     parrafos: [
-      'Cuando publicás un perfil, te pedimos: nombre, número de WhatsApp, email, categoría y oficio, una descripción de lo que hacés, tu barrio o zona y una foto.',
+      'Cuando publicás un perfil, te pedimos: nombre, número de WhatsApp, email, categoría y oficio, una descripción de lo que hacés, tus años de experiencia, tu barrio o zona, una foto de perfil y, de forma opcional, hasta 3 fotos de trabajos realizados.',
+      'Cuando alguien toca el botón "Contactar" de un perfil, registramos que ocurrió ese contacto (qué perfil y de qué categoría), sin guardar ningún dato de la persona que lo hizo. Lo usamos para medir el uso del sitio y, más adelante, para informar a cada profesional cuántas personas intentaron contactarlo.',
+      'Si reportás un perfil, guardamos el motivo y el detalle que escribas, para revisar el caso.',
       'Si iniciás sesión en el panel de administración, se usan los datos de acceso necesarios para autenticarte.',
       'Además, el proveedor donde está alojado el sitio puede registrar datos técnicos de las visitas, como la dirección IP y el tipo de navegador, para el funcionamiento y la seguridad del servicio.',
     ],
@@ -25,7 +27,7 @@ const secciones = [
   {
     titulo: 'Qué datos se muestran públicamente',
     parrafos: [
-      'En tu perfil se muestran públicamente tu nombre, oficio, categoría, zona, descripción, foto y número de WhatsApp. Cualquier persona que visite el sitio puede verlos y contactarte por WhatsApp.',
+      'En tu perfil se muestran públicamente tu nombre, oficio, categoría, zona, años de experiencia, descripción, fotos y número de WhatsApp. Cualquier persona que visite el sitio puede verlos y contactarte por WhatsApp.',
       'Como esa información es pública, puede ser copiada o utilizada por terceros fuera de la plataforma. Publicá solamente un número y una foto que aceptes que sean visibles para cualquier persona.',
       'Tu email no se muestra en el sitio ni puede ser consultado públicamente.',
     ],

@@ -1,7 +1,31 @@
-import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
+import type { Metadata } from 'next';
 import { synonyms } from '@/lib/data';
+import { listarProfesionales, zonasDe, claveZona } from '@/lib/profesionales';
 import { ProfessionalCard } from '@/components/ProfessionalCard';
 import { SearchBox } from '@/components/SearchBox';
+import { ZonaFiltro } from '@/components/ZonaFiltro';
+
+export const dynamic = 'force-dynamic';
+
+type Params = { q?: string; category?: string; zona?: string };
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Params> }): Promise<Metadata> {
+  const sp = await searchParams;
+  const q = (sp.q || '').trim();
+  if (q) {
+    return {
+      title: q + ' en Pergamino',
+      description: 'Resultados para “' + q + '” en Pergamino. Mirá perfiles y contactá directo por WhatsApp.',
+      robots: { index: false, follow: true },
+    };
+  }
+  return {
+    title: 'Buscar oficios y servicios en Pergamino',
+    description:
+      'Buscá plomeros, electricistas, pintores, costureras y otros profesionales de Pergamino por oficio y por zona. Contacto directo por WhatsApp.',
+  };
+}
 
 function match(q: string, p: any) {
   if (!q) return true;
@@ -26,43 +50,19 @@ function match(q: string, p: any) {
   );
 }
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string; category?: string }>;
-}) {
+export default async function SearchPage({ searchParams }: { searchParams: Promise<Params> }) {
   const sp = await searchParams;
   const q = sp.q || '';
+  const zonaSel = claveZona(sp.zona || '');
 
-  const { data } = await supabase
-    .from('Profesionales')
-    .select('id, created_at, nombre, oficio, telefono, descripcion, localidad, categoria, foto, plan');
+  const todos = await listarProfesionales();
 
-  const professionalsDb = (data || []).map((p: any) => ({
-    id: String(p.id),
-    slug: 'profesional-' + p.id,
-    name: p.nombre || '',
-    trade: p.oficio || '',
-    category: p.categoria || 'General',
-    zone: p.localidad || '',
-    description: p.descripcion || '',
-    years: 0,
-    home: true,
-    quotes: true,
-    rating: 5,
-    reviews: 0,
-    jobs: 0,
-    available: true,
-    services: [],
-    hours: '',
-    whatsapp: p.telefono || '',
-    badges: [],
-    photos: [p.foto || '/placeholder-work.svg'],
-  }));
-
-  const filtered = professionalsDb.filter(
+  // Primero se aplica la búsqueda y la categoría; las zonas se arman con ese resultado.
+  const coinciden = todos.filter(
     (p) => match(q, p) && (sp.category ? !p.category.localeCompare(sp.category) : true)
   );
+  const zonas = zonasDe(coinciden);
+  const filtered = zonaSel ? coinciden.filter((p) => claveZona(p.zone) === zonaSel) : coinciden;
 
   return (
     <main className="py-10">
@@ -71,9 +71,11 @@ export default async function SearchPage({
           <p className="text-sm font-bold text-[#2f6b52]">BUSCAR EN PERGAMINO</p>
           <h1 className="text-4xl font-black mt-2">{q ? `Resultados para “${q}”` : 'Encontrá un oficio'}</h1>
           <div className="mt-6">
-            <SearchBox initial={q} />
+            <SearchBox initial={q} zona={zonaSel} />
           </div>
         </div>
+
+        <ZonaFiltro zonas={zonas} activa={zonaSel} base="/buscar" params={{ q: q || undefined, category: sp.category }} />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {filtered.map((p) => (
@@ -85,7 +87,24 @@ export default async function SearchPage({
           <div className="card p-10 text-center mt-8">
             <div className="text-5xl">🔎</div>
             <h2 className="text-2xl font-black mt-4">Todavía no encontramos a alguien</h2>
-            <p className="muted mt-2">Probá con “plomero”, “arreglar ropa” o “pintar mi casa”.</p>
+            <p className="muted mt-2">
+              {zonaSel
+                ? 'Probá con otra zona o buscá en toda la ciudad.'
+                : 'Probá con “plomero”, “arreglar ropa” o “pintar mi casa”.'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3 mt-6">
+              <Link href="/solicitar" className="btn btn-primary">
+                Pedir este servicio
+              </Link>
+              {zonaSel || q ? (
+                <Link href="/buscar" className="btn btn-secondary">
+                  Ver todos los profesionales
+                </Link>
+              ) : null}
+            </div>
+            <p className="text-sm muted mt-4">
+              Contanos qué necesitás y los profesionales de la zona podrán escribirte.
+            </p>
           </div>
         )}
       </div>

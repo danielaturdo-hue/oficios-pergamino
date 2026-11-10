@@ -1,4 +1,5 @@
 import './globals.css';
+import type { Metadata } from 'next';
 import { Header } from '@/components/Header';
 import { Analytics } from '@vercel/analytics/next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
@@ -6,22 +7,31 @@ import { MobileBar } from '@/components/MobileBar';
 
 const fuente = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
-export const metadata = {
-  title: 'Oficios Pergamino | Profesionales y servicios en Pergamino',
+export const metadata: Metadata = {
+  metadataBase: new URL('https://oficios-pergamino.vercel.app'),
+  title: {
+    default: 'Oficios Pergamino | Profesionales y servicios en Pergamino',
+    template: '%s | Oficios Pergamino',
+  },
   description:
-    'Encontrá plomeros, electricistas, técnicos, personal de salud, gastronomía y otros profesionales de confianza en Pergamino. Contacto directo por WhatsApp.',
+    'Encontrá plomeros, electricistas, pintores, costureras, albañiles, técnicos y otros profesionales de Pergamino. Mirá perfiles y contactalos directo por WhatsApp.',
   keywords: [
     'oficios pergamino',
     'servicios pergamino',
-      'plomero pergamino',
-  'electricista pergamino',
-  'tecnico pergamino',
-  'gastronomia pergamino',
-  'salud pergamino',
+    'plomero pergamino',
+    'electricista pergamino',
+    'pintor pergamino',
+    'costurera pergamino',
+    'albañil pergamino',
+    'tecnico pergamino',
     'profesionales pergamino',
-    'oficios',
     'whatsapp',
   ],
+  openGraph: {
+    type: 'website',
+    locale: 'es_AR',
+    siteName: 'Oficios Pergamino',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -44,6 +54,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="mt-1">© 2026 Oficios Pergamino · Versión beta</p>
             </div>
             <div className="flex flex-col gap-2">
+              <a href="/empleos">Empleos en Pergamino</a>
+              <a href="/pedidos">Pedidos de servicios</a>
               <a href="/terminos">Términos y condiciones</a>
               <a href="/seguridad">Consejos de seguridad</a>
               <a href="/privacidad">Política de privacidad</a>
